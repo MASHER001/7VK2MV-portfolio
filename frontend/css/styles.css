@@ -1,0 +1,1533 @@
+/* =====================================================================
+   styles.css — shared base for all public pages.
+   Loaded by: index, about, skills, projects, project-details,
+              certificates, contact
+   Companion files:
+     - index.css       home page only
+     - pages.css       inner public pages (about, skills, projects, etc.)
+     - admin.css       admin panel (dark theme) — separate document
+     - animations.css  keyframes
+     - responsive.css  media queries
+   ===================================================================== */
+
+/* ---------------------------------------------------------------------
+   DESIGN TOKENS — single source of truth
+   --------------------------------------------------------------------- */
+:root{
+  /* palette */
+  --bg:       #d9d9d9;
+  --ink:      #0d0d0d;
+  --red:      #ec4a2f;
+  --card:     #e9e9e7;
+  --line:     rgba(0,0,0,.14);
+
+  /* typography */
+  --font:     "Unbounded","Arial Black","Segoe UI",sans-serif;
+  --sans:     system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+
+  /* layout */
+  --radius:   18px;
+  --page-max: 1180px;
+}
+
+/* ---------------------------------------------------------------------
+   RESET
+   --------------------------------------------------------------------- */
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+html,body{margin:0}
+
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--font);
+  overflow-x:hidden;
+  min-height:100vh;
+}
+
+a{color:inherit}
+button{font:inherit;color:inherit;cursor:pointer}
+
+/* ---------------------------------------------------------------------
+   LAYOUT PRIMITIVES
+   --------------------------------------------------------------------- */
+.page{
+  position:relative;
+  max-width:var(--page-max);
+  margin:0 auto;
+  padding:1.4rem 1.2rem 3rem;
+}
+
+/* Small uppercase label used everywhere */
+.label{
+  font-size:.58rem;
+  font-weight:800;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  line-height:1.35;
+}
+
+/* ---------------------------------------------------------------------
+   DECORATIVE CROSSES (used as background accents)
+   --------------------------------------------------------------------- */
+.plus{
+  position:absolute;
+  width:9px;
+  height:9px;
+  opacity:.55;
+  pointer-events:none;
+}
+.plus::before,
+.plus::after{
+  content:"";
+  position:absolute;
+  background:var(--ink);
+}
+.plus::before{left:4px;top:0;width:1px;height:9px}
+.plus::after{top:4px;left:0;height:1px;width:9px}
+
+/* ---------------------------------------------------------------------
+   TOP BAR (logo / label + menu button)
+   --------------------------------------------------------------------- */
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+}
+.top a{text-decoration:none}
+.top a:hover{text-decoration:underline}
+
+.menu-btn{
+  width:34px;
+  height:34px;
+  border:0;
+  background:none;
+  padding:0;
+  transition:transform .5s;
+}
+.menu-btn:hover{transform:rotate(90deg)}
+.menu-btn svg{width:100%;height:100%}
+
+/* ---------------------------------------------------------------------
+   META LINE (name / role display)
+   --------------------------------------------------------------------- */
+.meta{
+  display:flex;
+  justify-content:space-between;
+  gap:1rem;
+}
+
+/* ---------------------------------------------------------------------
+   HEADLINE — red slab + warped word
+   Used on index and every inner public page
+   --------------------------------------------------------------------- */
+.titlebox{
+  position:relative;
+  padding:2.6rem 0;
+  display:grid;
+  place-items:center;
+  margin-top:.6rem;
+}
+
+.slab{
+  position:absolute;
+  left:50%;
+  top:0;
+  bottom:0;
+  width:clamp(64px,16%,170px);
+  transform:translateX(-50%);
+  background:var(--red);
+}
+
+.word{
+  position:relative;
+  margin:0;
+  font-size:clamp(2.2rem,11vw,8.5rem);
+  font-weight:800;
+  line-height:1;
+  letter-spacing:-.02em;
+  white-space:nowrap;
+}
+.word .line{display:block}
+.word .ghost{
+  position:absolute;
+  inset:0;
+  color:transparent;
+  -webkit-text-stroke:1.5px var(--ink);
+  pointer-events:none;
+}
+.word span{display:inline-block;will-change:transform}
+
+/* ---------------------------------------------------------------------
+   BUTTONS
+   --------------------------------------------------------------------- */
+.pill{
+  display:inline-block;
+  padding:.55rem 1rem;
+  border:1px solid var(--ink);
+  border-radius:99px;
+  background:none;
+  text-decoration:none;
+  font-size:.62rem;
+  font-weight:800;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  transition:background .25s,color .25s,transform .25s;
+}
+.pill:hover{background:var(--ink);color:var(--bg);transform:translateY(-2px)}
+.pill[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.pill.solid{background:var(--red);border-color:var(--red)}
+.pill.solid:hover{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.pill.sm{padding:.4rem .8rem;font-size:.56rem}
+
+.filters{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.5rem;
+  margin:0 0 .8rem;
+}
+
+/* ---------------------------------------------------------------------
+   CARDS (generic)
+   --------------------------------------------------------------------- */
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:1.4rem;
+}
+.card.dark{
+  background:var(--ink);
+  color:var(--bg);
+  border-color:var(--ink);
+}
+
+/* ---------------------------------------------------------------------
+   CHIPS & BADGES
+   --------------------------------------------------------------------- */
+.chip{
+  display:inline-block;
+  padding:.3rem .8rem;
+  border-radius:99px;
+  background:rgba(0,0,0,.07);
+  font-family:var(--sans);
+  font-size:.85rem;
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:.4rem;
+  padding:.2rem .65rem;
+  border:1px solid var(--ink);
+  border-radius:99px;
+  font-size:.55rem;
+  font-weight:800;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+.badge::before{
+  content:"";
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:var(--red);
+}
+
+.badge-red{
+  display:inline-block;
+  padding:.15rem .6rem;
+  border-radius:99px;
+  background:var(--red);
+  color:#fff;
+  font-size:.55rem;
+  font-weight:800;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
+
+/* ---------------------------------------------------------------------
+   NOTICES & EMPTY STATES
+   --------------------------------------------------------------------- */
+.notice{
+  padding:1rem 1.2rem;
+  border-radius:12px;
+  background:#f3c9c2;
+  color:#8a2512;
+  font-family:var(--sans);
+}
+.notice.err{font-weight:600}
+
+.empty{
+  grid-column:1/-1;
+  padding:1.1rem 1.3rem;
+  border-radius:14px;
+  background:var(--card);
+  font-family:var(--sans);
+}
+
+.count{margin:1.2rem 0}
+
+.muted{opacity:.65}
+
+/* ---------------------------------------------------------------------
+   FULL-SCREEN MENU OVERLAY
+   --------------------------------------------------------------------- */
+.menu{
+  position:fixed;
+  inset:0;
+  z-index:20;
+  background:var(--red);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:2rem 8vw;
+  clip-path:circle(0 at calc(100% - 2rem) 2rem);
+  transition:clip-path .7s cubic-bezier(.7,0,.2,1);
+}
+.menu.open{clip-path:circle(150% at calc(100% - 2rem) 2rem)}
+.menu a{
+  color:var(--ink);
+  text-decoration:none;
+  font-size:clamp(1.8rem,7vw,4rem);
+  font-weight:800;
+  text-transform:uppercase;
+  line-height:1.25;
+}
+.menu a:hover{
+  -webkit-text-stroke:1.5px var(--ink);
+  color:transparent;
+}
+.menu .close{
+  position:absolute;
+  top:1.4rem;
+  right:1.2rem;
+  border:0;
+  background:none;
+  font-size:2rem;
+  line-height:1;
+}
+
+/* ---------------------------------------------------------------------
+   SCROLL REVEAL — base state; visibility toggled by JS / IO
+   --------------------------------------------------------------------- */
+.reveal{
+  opacity:0;
+  transform:translateY(18px);
+  transition:opacity .7s ease,transform .7s ease;
+}
+.reveal.visible{
+  opacity:1;
+  transform:none;
+}
+
+/* ---------------------------------------------------------------------
+   FOOTER
+   --------------------------------------------------------------------- */
+.site-footer{
+  text-align:center;
+  padding:2rem 1rem;
+  font-size:.6rem;
+  font-weight:800;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+
+/* ---------------------------------------------------------------------
+   IMAGES / MEDIA helpers
+   --------------------------------------------------------------------- */
+img{max-width:100%;display:block}
+/* =====================================================================
+   ABOUT PAGE — about.html
+   Two-column layout (photo | stacked cards) + CTA banner
+   ===================================================================== */
+
+/* Two-column grid: photo on the left, stack of cards on the right */
+.grid{
+  display:grid;
+  grid-template-columns:minmax(0,330px) minmax(0,1fr);
+  gap:1.5rem;
+  margin-top:2.2rem;
+}
+
+/* Photo block — falls back to big initials on a red square */
+.photo{
+  aspect-ratio:4/5;
+  border-radius:18px;
+  background:var(--red) center/cover no-repeat;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  box-shadow:0 18px 40px rgba(0,0,0,.22);
+}
+.photo .mono{
+  font-size:clamp(4rem,12vw,7rem);
+  font-weight:800;
+  letter-spacing:-.05em;
+}
+
+/* Vertical stack of cards on the right */
+.stack{
+  display:grid;
+  gap:1.5rem;
+  align-content:start;
+}
+
+/* Section titles inside cards */
+.stack h2{
+  margin:0 0 .9rem;
+  font-size:.7rem;
+  font-weight:800;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+
+/* Hello card — name, role, bio */
+.name{
+  margin:0 0 .2rem;
+  font-size:clamp(1.4rem,4vw,2.2rem);
+  font-weight:800;
+  letter-spacing:-.02em;
+  line-height:1.15;
+}
+.role{
+  margin:0 0 1.2rem;
+  color:#555;
+  font-size:.85rem;
+}
+.bio{
+  margin:0;
+  font-family:var(--sans);
+  font-size:1.02rem;
+  line-height:1.75;
+  white-space:pre-line;
+}
+
+/* Availability card */
+.avail-msg{
+  margin:0;
+  font-family:var(--sans);
+  font-size:.95rem;
+}
+
+/* Details card — location, email */
+.facts{display:grid;gap:.1rem}
+.fact{
+  display:flex;
+  justify-content:space-between;
+  gap:1rem;
+  padding:.7rem 0;
+  border-bottom:1px solid var(--line);
+  font-family:var(--sans);
+  font-size:.95rem;
+}
+.fact:last-child{border-bottom:0}
+.fact span:first-child{color:#666}
+
+/* Find me card — pill row */
+.links{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.6rem;
+}
+
+/* Skills chip list */
+.chips{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.45rem;
+}
+.chip.learn{
+  background:var(--red);
+  color:#fff;
+}
+
+/* CTA banner — black strip at the bottom of the page */
+.cta{
+  margin-top:2.2rem;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:1rem;
+  flex-wrap:wrap;
+  padding:1.6rem;
+  border-radius:18px;
+  background:var(--ink);
+  color:var(--bg);
+}
+.cta h3{
+  margin:0;
+  font-size:clamp(1.1rem,3vw,1.7rem);
+  line-height:1.2;
+}
+.cta .pill{
+  border-color:var(--bg);
+  color:var(--bg);
+}
+.cta .pill:hover{
+  background:var(--red);
+  border-color:var(--red);
+  color:#fff;
+}
+
+/* Responsive — collapse grid on small screens */
+@media (max-width:800px){
+  .grid{grid-template-columns:1fr}
+  .photo{aspect-ratio:16/10}
+}
+/* =====================================================================
+   CERTIFICATES PAGE — certificates.html
+   Filterable card grid with lightbox zoom.
+   ===================================================================== */
+
+/* Filter row above the grid */
+.certificates-page .filters,
+.page > .filters{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.5rem;
+  margin:2.2rem 0 1.4rem;
+}
+
+.count{
+  margin:0 0 1.2rem;
+}
+
+/* Card grid */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(285px,1fr));
+  gap:1.4rem;
+}
+
+/* Individual certificate card */
+.cert{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:18px;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  transition:transform .3s,box-shadow .3s;
+}
+.cert:hover{
+  transform:translateY(-5px);
+  box-shadow:0 18px 38px rgba(0,0,0,.2);
+}
+
+/* Thumbnail — either an image or initials on a red block */
+.thumb{
+  aspect-ratio:4/3;
+  background:var(--red) center/cover no-repeat;
+  display:grid;
+  place-items:center;
+  border:0;
+  padding:0;
+  width:100%;
+  position:relative;
+}
+.thumb.zoom{cursor:zoom-in}
+.thumb .mono{
+  font-size:3.4rem;
+  font-weight:800;
+  letter-spacing:-.05em;
+}
+
+/* Featured badge — top-right corner of the thumb */
+.star{
+  position:absolute;
+  top:.7rem;
+  right:.7rem;
+  background:var(--ink);
+  color:#fff;
+  font-size:.55rem;
+  font-weight:800;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  padding:.3rem .6rem;
+  border-radius:99px;
+}
+
+/* Body */
+.cert .body{
+  padding:1.2rem 1.3rem 1.4rem;
+  display:flex;
+  flex-direction:column;
+  gap:.55rem;
+  flex:1;
+}
+.cert .body h3{
+  margin:0;
+  font-size:1rem;
+  line-height:1.3;
+}
+.cert .issuer{
+  margin:0;
+  color:#555;
+  font-size:.75rem;
+}
+.cert .desc{
+  margin:0;
+  font-family:var(--sans);
+  font-size:.92rem;
+  line-height:1.55;
+  color:#333;
+}
+
+/* Category / expiry tags */
+.cert .tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.4rem;
+}
+.cert .tag{
+  padding:.2rem .65rem;
+  border-radius:99px;
+  background:rgba(0,0,0,.07);
+  font-family:var(--sans);
+  font-size:.78rem;
+}
+.cert .tag.exp{
+  background:#f3c9c2;
+  color:#8a2512;
+}
+
+/* Credential ID */
+.cid{
+  margin:0;
+  font-family:ui-monospace,Consolas,monospace;
+  font-size:.75rem;
+  color:#666;
+  word-break:break-all;
+}
+
+/* Action row — Verify / PDF pills */
+.cert .actions{
+  display:flex;
+  gap:.5rem;
+  flex-wrap:wrap;
+  margin-top:auto;
+  padding-top:.6rem;
+}
+
+/* Empty & notice states span the full grid width */
+.cert .empty,
+.cert .notice,
+.empty,
+.notice{
+  grid-column:1/-1;
+}
+
+/* Lightbox dialog */
+dialog#lightbox,
+dialog{
+  border:0;
+  padding:0;
+  background:none;
+  max-width:94vw;
+  max-height:94vh;
+}
+dialog::backdrop{background:rgba(0,0,0,.85)}
+dialog img{
+  display:block;
+  max-width:94vw;
+  max-height:88vh;
+  border-radius:12px;
+  cursor:zoom-out;
+}
+dialog p{
+  margin:.6rem 0 0;
+  color:#fff;
+  text-align:center;
+  font-size:.7rem;
+}
+/* =====================================================================
+   CONTACT PAGE — contact.html
+   Two-column layout: contact info (left) + form (right)
+   ===================================================================== */
+
+.page-contact .grid{
+  display:grid;
+  grid-template-columns:minmax(0,380px) minmax(0,1fr);
+  gap:1.5rem;
+  margin-top:2.2rem;
+  align-items:start;
+}
+
+/* Vertical stack of info cards on the left */
+.page-contact .stack{
+  display:grid;
+  gap:1.5rem;
+}
+
+/* Section titles inside cards */
+.page-contact h2{
+  margin:0 0 .9rem;
+  font-size:.7rem;
+  font-weight:800;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+
+/* Lead paragraph — availability card */
+.lead{
+  margin:0 0 1rem;
+  font-family:var(--sans);
+  font-size:1.02rem;
+  line-height:1.65;
+}
+
+/* Info rows — email, phone, location */
+.page-contact .row{
+  display:flex;
+  justify-content:space-between;
+  gap:1rem;
+  padding:.7rem 0;
+  border-bottom:1px solid var(--line);
+  font-family:var(--sans);
+  font-size:.95rem;
+  word-break:break-word;
+}
+.page-contact .row:last-child{border-bottom:0}
+.page-contact .row span:first-child{color:#666;flex:none}
+.page-contact .row a{
+  text-decoration:none;
+  border-bottom:1px solid var(--ink);
+}
+.page-contact .row a:hover{
+  color:var(--red);
+  border-color:var(--red);
+}
+
+/* Social pill row */
+.page-contact .links{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.6rem;
+}
+
+/* ---------------------------------------------------------------- */
+/* FORM                                                              */
+/* ---------------------------------------------------------------- */
+#contact-form{
+  display:grid;
+  gap:1.1rem;
+}
+
+.field{
+  display:flex;
+  flex-direction:column;
+  gap:.4rem;
+}
+
+.two{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1.1rem;
+}
+
+#contact-form label{
+  font-size:.62rem;
+  font-weight:800;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+
+#contact-form input,
+#contact-form textarea{
+  width:100%;
+  background:#f6f6f4;
+  color:var(--ink);
+  border:1.5px solid var(--ink);
+  border-radius:12px;
+  padding:.8rem 1rem;
+  font:inherit;
+  font-family:var(--sans);
+  font-size:1rem;
+  transition:box-shadow .2s, border-color .2s;
+}
+#contact-form input:focus,
+#contact-form textarea:focus{
+  outline:none;
+  border-color:var(--red);
+  box-shadow:0 0 0 3px rgba(236,74,47,.25);
+}
+#contact-form textarea{
+  min-height:170px;
+  resize:vertical;
+}
+
+/* Invalid field styling */
+.field.bad input,
+.field.bad textarea{
+  border-color:#b3261e;
+  background:#fbe9e7;
+}
+
+/* Inline error text */
+.err{
+  min-height:1em;
+  margin:0;
+  color:#b3261e;
+  font-family:var(--sans);
+  font-size:.82rem;
+}
+
+/* Counter row under textarea */
+.hint{
+  display:flex;
+  justify-content:space-between;
+  color:#666;
+  font-family:var(--sans);
+  font-size:.8rem;
+}
+
+/* Send button */
+.send{
+  align-self:start;
+  display:inline-flex;
+  align-items:center;
+  gap:.7rem;
+  padding:.95rem 1.6rem;
+  border:0;
+  border-radius:99px;
+  background:var(--red);
+  color:var(--ink);
+  font-size:.7rem;
+  font-weight:800;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  transition:transform .25s, background .25s, color .25s;
+}
+.send:hover{
+  background:var(--ink);
+  color:var(--bg);
+  transform:translateY(-2px);
+}
+.send:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+  transform:none;
+}
+
+/* Honeypot field — offscreen */
+.hp{
+  position:absolute;
+  left:-9999px;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+}
+
+/* Form-level error */
+#form-error .notice{
+  padding:.9rem 1.1rem;
+  border-radius:12px;
+  background:#f3c9c2;
+  color:#8a2512;
+  font-family:var(--sans);
+  font-size:.95rem;
+}
+
+/* Success state — replaces the form entirely */
+.done{
+  text-align:center;
+  padding:2.5rem 1rem;
+}
+.done .tick{
+  width:64px;
+  height:64px;
+  border-radius:50%;
+  background:var(--red);
+  display:grid;
+  place-items:center;
+  margin:0 auto 1.1rem;
+  font-size:1.8rem;
+  font-weight:800;
+}
+.done h3{
+  margin:0 0 .5rem;
+  font-size:1.3rem;
+}
+.done p{
+  margin:0 0 1.3rem;
+  font-family:var(--sans);
+}
+
+/* Responsive — collapse to one column */
+@media (max-width:860px){
+  .page-contact .grid{grid-template-columns:1fr}
+  .two{grid-template-columns:1fr}
+}
+/* =====================================================================
+   SKILLS PAGE — skills.html
+   Grouped grid: category headings + cards with meters.
+   ===================================================================== */
+
+/* Back button — fixed top-left */
+.back-btn{
+  position:fixed;
+  top:1rem;
+  left:1rem;
+  z-index:20;
+  display:inline-flex;
+  align-items:center;
+  gap:.4rem;
+  padding:.55rem 1rem .55rem .75rem;
+  font-size:.62rem;
+  font-weight:800;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  text-decoration:none;
+  color:var(--ink);
+  background:var(--bg);
+  border:1.5px solid var(--ink);
+  border-radius:99px;
+  transition:background .25s, color .25s, transform .2s;
+}
+.back-btn:hover,
+.back-btn:focus-visible{
+  background:var(--ink);
+  color:var(--bg);
+  transform:translateX(-3px);
+}
+.back-btn svg{width:16px;height:16px}
+
+/* Page wrapper */
+.skills-page{
+  display:flex;
+  flex-direction:column;
+  min-height:100svh;
+  padding:0 1.2rem 3rem;
+}
+
+/* Hero title block */
+.skills-hero{
+  position:relative;
+  width:100%;
+  padding:5rem 0 2rem;
+  display:grid;
+  place-items:center;
+  text-align:center;
+}
+.skills-hero .slab{
+  top:5rem;
+  bottom:4.5rem;
+  z-index:-1;
+}
+.skills-hero .meta{
+  margin-top:1.5rem;
+  opacity:.75;
+  display:block;
+  text-align:center;
+}
+
+/* Controls — search + filter pills */
+.skills-controls{
+  display:flex;
+  flex-direction:column;
+  gap:.9rem;
+  margin:0 auto 2rem;
+  width:100%;
+  max-width:1100px;
+}
+.skills-controls input[type="search"]{
+  width:100%;
+  padding:.85rem 1.1rem;
+  font:inherit;
+  font-size:.85rem;
+  color:var(--ink);
+  background:transparent;
+  border:1.5px solid var(--ink);
+  border-radius:99px;
+  outline:none;
+  transition:border-color .2s, background .2s;
+}
+.skills-controls input[type="search"]:focus{
+  border-color:var(--red);
+  background:rgba(236,74,47,.04);
+}
+
+.skills-controls .filters{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.4rem;
+  margin:0;
+}
+
+/* Count line */
+.skills-page .count{
+  max-width:1100px;
+  margin:0 auto 1.2rem;
+  width:100%;
+  color:#666;
+}
+
+/* Group layout */
+.skills-groups{
+  width:100%;
+  max-width:1100px;
+  margin:0 auto;
+  display:grid;
+  gap:2.5rem;
+}
+.skills-groups .group h2{
+  margin:0 0 1rem;
+  font-size:.7rem;
+  font-weight:800;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+.skills-groups .group .grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(270px,1fr));
+  gap:1.4rem;
+}
+
+/* Skill card */
+.page-skills .card.skill{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:1.4rem;
+  display:flex;
+  flex-direction:column;
+  gap:.8rem;
+}
+.page-skills .skill-top{
+  display:flex;
+  align-items:center;
+  gap:.8rem;
+}
+.page-skills .skill-top h3{
+  margin:0 0 .25rem;
+  font-size:1rem;
+  line-height:1.25;
+}
+.page-skills .ico{
+  width:46px;
+  height:46px;
+  border-radius:50%;
+  background:var(--ink);
+  color:var(--bg);
+  display:grid;
+  place-items:center;
+  font-size:1.1rem;
+  font-weight:800;
+  flex:none;
+}
+.page-skills .badge-red{
+  display:inline-block;
+  padding:.15rem .6rem;
+  border-radius:99px;
+  background:var(--red);
+  color:#fff;
+  font-size:.55rem;
+  font-weight:800;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
+.page-skills .desc{
+  margin:0;
+  font-family:var(--sans);
+  font-size:.92rem;
+  line-height:1.55;
+  color:#333;
+}
+
+/* Proficiency meter */
+.meter-row{
+  display:flex;
+  align-items:center;
+  gap:.8rem;
+  margin-top:auto;
+}
+.meter-row b{
+  font-size:.72rem;
+  min-width:2.6em;
+  text-align:right;
+}
+.meter{
+  flex:1;
+  height:8px;
+  border-radius:99px;
+  background:rgba(0,0,0,.12);
+  overflow:hidden;
+}
+.meter .fill{
+  display:block;
+  height:100%;
+  width:var(--p,0%);
+  background:var(--red);
+  border-radius:99px;
+  transition:width .8s cubic-bezier(.2,.8,.2,1);
+}
+
+/* Empty / notice */
+.skills-groups .empty,
+.skills-groups .notice{
+  grid-column:1/-1;
+  padding:1.1rem 1.3rem;
+  border-radius:14px;
+  background:var(--card);
+  font-family:var(--sans);
+}
+.skills-groups .notice{
+  background:#f3c9c2;
+  color:#8a2512;
+  /* =====================================================================
+   PROJECTS LIST — projects.html
+   Filterable project card grid.
+   ===================================================================== */
+
+.controls{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.75rem;
+  margin:2.2rem 0 1rem;
+}
+.controls input,
+.controls select{
+  background:#f6f6f4;
+  color:var(--ink);
+  border:1.5px solid var(--ink);
+  border-radius:99px;
+  padding:.7rem 1.1rem;
+  font-family:var(--sans);
+  font-size:.95rem;
+}
+.controls input{flex:1;min-width:200px;max-width:380px}
+.controls input:focus,
+.controls select:focus{
+  outline:none;
+  border-color:var(--red);
+  box-shadow:0 0 0 3px rgba(236,74,47,.25);
+}
+
+/* Project card grid */
+.page-projects .grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  gap:1.5rem;
+  margin-top:1.5rem;
+}
+
+/* Project card */
+.proj{
+  position:relative;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:20px;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  transition:transform .3s, box-shadow .3s;
+}
+.proj:hover{
+  transform:translateY(-6px);
+  box-shadow:0 20px 42px rgba(0,0,0,.22);
+}
+
+/* Thumbnail with zoom hover */
+.proj .thumb{
+  position:relative;
+  aspect-ratio:16/10;
+  background:var(--red) center/cover no-repeat;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+}
+.proj .thumb .zoom{
+  position:absolute;
+  inset:0;
+  background:center/cover no-repeat;
+  transition:transform .6s;
+}
+.proj:hover .thumb .zoom{transform:scale(1.06)}
+.proj .thumb .mono{
+  font-size:3.6rem;
+  font-weight:800;
+  letter-spacing:-.05em;
+}
+
+/* Featured flag */
+.proj .flag{
+  position:absolute;
+  top:.8rem;
+  left:.8rem;
+  z-index:1;
+  background:var(--ink);
+  color:#fff;
+  font-size:.55rem;
+  font-weight:800;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  padding:.3rem .65rem;
+  border-radius:99px;
+}
+
+/* Card body */
+.proj .body{
+  padding:1.2rem 1.35rem 1.4rem;
+  display:flex;
+  flex-direction:column;
+  gap:.6rem;
+  flex:1;
+}
+.proj .row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:.6rem;
+}
+.proj .cat{
+  font-size:.58rem;
+  font-weight:800;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:#555;
+}
+.proj .body h3{
+  margin:0;
+  font-size:1.1rem;
+  line-height:1.3;
+}
+.proj .body h3 a{text-decoration:none}
+.proj .body h3 a::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:1;
+}
+.proj .body h3 a:focus-visible::after{
+  outline:3px solid var(--red);
+  outline-offset:-3px;
+  border-radius:20px;
+}
+.proj .desc{
+  margin:0;
+  font-family:var(--sans);
+  font-size:.93rem;
+  line-height:1.55;
+  color:#333;
+  display:-webkit-box;
+  -webkit-line-clamp:3;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+}
+.proj .chips{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.35rem;
+}
+.proj .chip{
+  padding:.2rem .65rem;
+  border-radius:99px;
+  background:rgba(0,0,0,.07);
+  font-family:var(--sans);
+  font-size:.78rem;
+}
+.proj .actions{
+  display:flex;
+  gap:.5rem;
+  margin-top:auto;
+  padding-top:.5rem;
+  position:relative;
+  z-index:2;
+}
+
+/* Reveal + hover don't fight */
+.proj.reveal:not(.visible){transform:translateY(18px)}
+.proj.reveal.visible:hover{transform:translateY(-6px)}
+
+
+/* =====================================================================
+   PROJECT DETAILS — project-details.html
+   Single project page with cover image, facts, gallery, prev/next.
+   ===================================================================== */
+
+/* Breadcrumbs */
+.crumbs{
+  margin:0 0 1rem;
+  font-size:.6rem;
+  font-weight:800;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+.crumbs a{text-decoration:none}
+.crumbs a:hover{text-decoration:underline}
+
+/* Hero */
+.page-project-details .hero{margin-top:2.4rem}
+.titlewrap{
+  display:flex;
+  gap:1rem;
+  align-items:stretch;
+}
+.bar{
+  flex:none;
+  width:clamp(14px,2.4vw,26px);
+  background:var(--red);
+  animation:grow 1s cubic-bezier(.2,.8,.2,1) both;
+  transform-origin:top;
+}
+.title{
+  margin:0;
+  font-size:clamp(1.7rem,5.6vw,4.4rem);
+  font-weight:800;
+  line-height:1.08;
+  letter-spacing:-.02em;
+  overflow-wrap:anywhere;
+}
+.sub{
+  max-width:760px;
+  margin:1.2rem 0 0;
+  font-family:var(--sans);
+  font-size:1.12rem;
+  line-height:1.65;
+}
+
+/* Status badge + action buttons */
+.page-project-details .badge{
+  display:inline-flex;
+  align-items:center;
+  gap:.5rem;
+  padding:.3rem .8rem;
+  border:1px solid var(--ink);
+  border-radius:99px;
+  font-size:.62rem;
+  font-weight:800;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.page-project-details .badge::before{
+  content:"";
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:var(--red);
+}
+.btns{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.6rem;
+  margin-top:1.4rem;
+  align-items:center;
+}
+
+/* Cover image */
+.cover{
+  display:block;
+  width:100%;
+  margin:2rem 0 0;
+  padding:0;
+  border:0;
+  border-radius:20px;
+  overflow:hidden;
+  background:var(--red);
+  cursor:zoom-in;
+  box-shadow:0 22px 50px rgba(0,0,0,.25);
+}
+.cover img{
+  display:block;
+  width:100%;
+  max-height:560px;
+  object-fit:cover;
+  transition:transform .6s;
+}
+.cover:hover img{transform:scale(1.03)}
+
+/* Content layout: main + sidebar */
+.layout{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,330px);
+  gap:1.5rem;
+  margin-top:2rem;
+  align-items:start;
+}
+.stack{display:grid;gap:1.5rem}
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:1.5rem;
+}
+.card.dark{
+  background:var(--ink);
+  color:var(--bg);
+  border-color:var(--ink);
+}
+h2{
+  margin:0 0 .9rem;
+  font-size:.7rem;
+  font-weight:800;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+.text{
+  margin:0;
+  font-family:var(--sans);
+  font-size:1.02rem;
+  line-height:1.8;
+  white-space:pre-line;
+}
+
+/* Facts sidebar */
+.facts{display:grid}
+.fact{
+  display:flex;
+  justify-content:space-between;
+  gap:1rem;
+  padding:.7rem 0;
+  border-bottom:1px solid var(--line);
+  font-family:var(--sans);
+  font-size:.95rem;
+}
+.fact:last-child{border-bottom:0}
+.fact span:first-child{color:#666}
+.fact span:last-child{text-align:right}
+
+/* Chips */
+.chips{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.45rem;
+}
+.chip{
+  padding:.35rem .8rem;
+  border-radius:99px;
+  background:rgba(0,0,0,.07);
+  font-family:var(--sans);
+  font-size:.85rem;
+}
+
+/* Gallery */
+.gallery{margin-top:2.2rem}
+.shots{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:1.2rem;
+}
+.shot{
+  margin:0;
+  padding:0;
+  border:0;
+  background:var(--card);
+  border-radius:16px;
+  overflow:hidden;
+  text-align:left;
+  cursor:zoom-in;
+  transition:transform .3s, box-shadow .3s;
+}
+.shot:hover{
+  transform:translateY(-4px);
+  box-shadow:0 16px 34px rgba(0,0,0,.2);
+}
+.shot img{
+  display:block;
+  width:100%;
+  aspect-ratio:16/10;
+  object-fit:cover;
+}
+.shot span{
+  display:block;
+  padding:.7rem .9rem;
+  font-family:var(--sans);
+  font-size:.88rem;
+}
+
+/* Prev / Next pager */
+.pager{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1.2rem;
+  margin-top:2.6rem;
+}
+.pager a{
+  display:block;
+  padding:1.3rem 1.5rem;
+  border:1px solid var(--ink);
+  border-radius:18px;
+  text-decoration:none;
+  transition:background .25s, color .25s, transform .25s;
+}
+.pager a:hover{
+  background:var(--ink);
+  color:var(--bg);
+  transform:translateY(-3px);
+}
+.pager a.next{text-align:right;grid-column:2}
+.pager small{
+  display:block;
+  margin-bottom:.4rem;
+  font-size:.6rem;
+  font-weight:800;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  opacity:.7;
+}
+.pager b{font-size:1rem;line-height:1.3}
+
+/* Lightbox (project details uses its own dialog) */
+.lb{
+  position:relative;
+  display:grid;
+  justify-items:center;
+}
+.lb img{
+  display:block;
+  max-width:92vw;
+  max-height:80vh;
+  border-radius:12px;
+}
+.lb p{
+  margin:.8rem 0 0;
+  color:#fff;
+  text-align:center;
+  font-family:var(--sans);
+  font-size:.92rem;
+  max-width:80ch;
+}
+.lb button{
+  position:absolute;
+  border:0;
+  background:rgba(255,255,255,.14);
+  color:#fff;
+  border-radius:50%;
+  width:42px;
+  height:42px;
+  font-size:1.4rem;
+  line-height:1;
+  transition:background .2s;
+  cursor:pointer;
+}
+.lb button:hover{background:var(--red)}
+.lb .x{top:-.6rem;right:-.6rem}
+.lb .prev{left:.6rem;top:calc(40% - 21px)}
+.lb .nxt{right:.6rem;top:calc(40% - 21px)}
+
+/* Missing / not-found state */
+.missing{
+  text-align:center;
+  padding:4rem 1rem;
+}
+.missing h1{
+  margin:0 0 1rem;
+  font-size:clamp(1.6rem,5vw,3rem);
+}
+
+/* Responsive */
+@media (min-width:900px){
+  .page-project-details .hero{margin-top:3rem}
+}
+@media (max-width:860px){
+  .layout{grid-template-columns:1fr}
+}
+@media (max-width:560px){
+  .pager{grid-template-columns:1fr}
+  .pager a.next{grid-column:1}
+  .lb .prev{left:.2rem}
+  .lb .nxt{right:.2rem}
+}
+}

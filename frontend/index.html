@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body class="site">
+  <div class="hero">
+    <span class="plus" style="left:4%;top:3%"></span><span class="plus" style="right:4%;top:3%"></span>
+    <span class="plus" style="left:4%;top:34%"></span><span class="plus" style="right:4%;top:34%"></span>
+
+    <header class="top">
+      <div class="label">Welcome<br>to my</div>
+      <div class="menu-wrap">
+        <span class="menu-tip" id="menuTip" role="tooltip">Menu</span>
+        <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+          <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3.5"><circle cx="32" cy="32" r="29"/><path d="M32 13l19 19-19 19-19-19z"/><circle cx="32" cy="32" r="6" fill="currentColor"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <section class="titlebox"><div class="slab"></div><h1 class="word" id="word" aria-label="Portfolio"></h1></section>
+    <div class="meta label"><span id="who">Victor Lewis Machariah</span><span id="role">Full-Stack Web Developer</span></div>
+
+    <button class="arrow left" id="prev" aria-label="Previous"></button>
+    <button class="arrow right" id="next" aria-label="Next"></button>
+
+    <section class="stage" id="stage" aria-label="Featured work"></section>
+
+    <div class="ring">
+      <svg viewBox="0 0 300 300" aria-hidden="true">
+        <defs><path id="circ" d="M150,150 m-118,0 a118,118 0 1,1 236,0 a118,118 0 1,1 -236,0"/></defs>
+        <text><textPath href="#circ" textLength="738" lengthAdjust="spacing">PORTFOLIO · PORTFOLIO · PORTFOLIO · PORTFOLIO · PORTFOLIO · PORTFOLIO ·</textPath></text>
+      </svg>
+      <a class="me" href="about.html" aria-label="About me">ME</a>
+    </div>
+  </div>
+
+  <nav class="menu" id="menu" aria-label="Main menu">
+    <button class="close" id="menuClose" aria-label="Close menu">&times;</button>
+    <a href="index.html">Home</a><a href="about.html">About</a><a href="skills.html">Skills</a>
+    <a href="projects.html">Projects</a><a href="certificates.html">Certificates</a><a href="contact.html">Contact</a>
+  </nav>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/pages/home.js"></script>
+</body>
+</html>

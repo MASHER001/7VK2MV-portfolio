@@ -1,0 +1,57 @@
+/* =====================================================================
+   index.css - home page only (hero + page-card fan + ring).
+   Shared base lives in styles.css, animations.css and responsive.css.
+   ===================================================================== */
+:root{--h:calc(var(--w)*1.4)} /* --w and --step are set per screen size in responsive.css */
+
+.hero{position:relative;min-height:100svh;overflow:hidden;display:flex;flex-direction:column;padding:1.4rem 1.2rem 0}
+.hero .top,.hero .meta{position:relative;z-index:3}
+.hero .word{font-size:clamp(2.2rem,10.5vw,8.5rem)}
+.hero .meta{padding:.2rem 0 0}
+
+/* "Menu" pop-up beside the menu button */
+.menu-wrap{position:relative}
+.menu-tip{position:absolute;right:calc(100% + 10px);top:50%;transform:translateY(-50%) scale(.5);transform-origin:right center;
+  background:var(--ink);color:var(--bg);font-size:.58rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;padding:.45rem .85rem;border-radius:99px;
+  white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .25s,transform .4s cubic-bezier(.34,1.56,.64,1)}
+.menu-tip::after{content:"";position:absolute;left:100%;top:50%;margin-top:-5px;border:5px solid transparent;border-left:6px solid var(--ink);border-right:0}
+.menu-wrap:hover .menu-tip,.menu-wrap:focus-within .menu-tip,.menu-tip.show{opacity:1;transform:translateY(-50%) scale(1)}
+
+/* side arrows (previous / next card) */
+.arrow{position:absolute;top:calc(1.4rem + 7.4rem);width:22px;height:30px;border:0;background:none;padding:0;z-index:4;opacity:.9;transition:transform .2s}
+.arrow::before{content:"";position:absolute;top:50%;margin-top:-6px;border:6px solid transparent}
+.arrow.left{left:.2rem}.arrow.right{right:.2rem}
+.arrow.left::before{left:0;border-right:9px solid var(--ink);border-left:0}
+.arrow.right::before{right:0;border-left:9px solid var(--ink);border-right:0}
+.arrow:hover{transform:scale(1.3)}
+
+/* card fan: one card per page of the site */
+.stage{position:relative;height:calc(var(--h) + 1.2rem);margin-top:auto;touch-action:pan-y;user-select:none}
+.fcard{position:absolute;left:50%;top:1.2rem;width:var(--w);height:var(--h);margin-left:calc(var(--w)/-2);padding:.85rem;border:0;border-radius:18px;overflow:hidden;
+  display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;background:#10151d;color:#fff;text-align:left;
+  transform-origin:50% 230%;transform:rotate(calc(var(--o)*var(--step,13deg)));
+  box-shadow:0 14px 30px rgba(0,0,0,.28)}
+.stage:not(.ready) .fcard{transform:none;opacity:0}
+.fcard.on{box-shadow:0 22px 44px rgba(0,0,0,.38)}
+.fcard.red{background:var(--red);color:var(--ink)}
+.fcard.light{background:#f4f4f2;color:var(--ink)}
+.fcard:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+
+.fcard .num{font-size:.6rem;font-weight:800;letter-spacing:.14em;opacity:.65}
+.glyph{align-self:center;width:44%;aspect-ratio:1;padding:16%;display:grid;place-items:center;border-radius:50%;border:1.5px solid currentColor}
+.glyph svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.glyph.logo{width:62%;padding:0;border:0}
+.glyph.logo svg{stroke-width:5}
+.fcard .cap{display:block;width:100%;min-width:0}
+.fcard .cap b{display:block;font-size:clamp(.5rem,.35rem + .7vw,.8rem);font-weight:800;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fcard .cap small{display:block;margin-top:.2rem;font-size:.6rem;font-weight:500;opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+
+/* rotating ring + ME button */
+.ring{position:relative;height:175px;margin:0 -1.2rem}
+.ring svg{position:absolute;left:50%;top:0;width:300px;height:300px;margin-left:-150px}
+.ring text{font-size:9.5px;font-weight:800;letter-spacing:.1em;fill:var(--ink);font-family:var(--font)}
+.me{position:absolute;left:50%;top:128px;width:54px;height:54px;margin-left:-27px;display:grid;place-items:center;border-radius:50%;
+  color:var(--ink);font-size:.8rem;font-weight:800;text-decoration:none;background:var(--bg);box-shadow:0 0 0 1px rgba(0,0,0,.2);transition:background .3s,color .3s}
+.me::before{content:"";position:absolute;top:-14px;border:5px solid transparent;border-bottom:7px solid var(--ink);border-top:0}
+.me:hover{background:var(--ink);color:var(--bg)}

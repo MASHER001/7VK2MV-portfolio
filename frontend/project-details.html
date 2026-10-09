@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Project | Portfolio</title>
+  <meta name="description" content="Project details">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="page">
+    <span class="plus" style="left:.4rem;top:.6rem"></span><span class="plus" style="right:.4rem;top:.6rem"></span>
+
+    <header class="top">
+      <div class="label"><a href="projects.html">&larr; All projects</a><br>Case study</div>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3.5"><circle cx="32" cy="32" r="29"/><path d="M32 13l19 19-19 19-19-19z"/><circle cx="32" cy="32" r="6" fill="currentColor"/></svg>
+      </button>
+    </header>
+
+    <main id="content"><p class="label" style="margin-top:3rem">Loading…</p></main>
+  </div>
+  <footer class="site-footer" id="footer-text"></footer>
+
+  <dialog id="lightbox" aria-label="Image viewer">
+    <div class="lb">
+      <button class="x" type="button" id="lbClose" aria-label="Close">&times;</button>
+      <button class="prev" type="button" id="lbPrev" aria-label="Previous image">&lsaquo;</button>
+      <img id="lbImg" alt="">
+      <button class="nxt" type="button" id="lbNext" aria-label="Next image">&rsaquo;</button>
+      <p id="lbCap"></p>
+    </div>
+  </dialog>
+
+  <nav class="menu" id="menu" aria-label="Main menu">
+    <button class="close" id="menuClose" aria-label="Close menu">&times;</button>
+    <a href="index.html">Home</a><a href="about.html">About</a><a href="skills.html">Skills</a>
+    <a href="projects.html">Projects</a><a href="certificates.html">Certificates</a><a href="contact.html">Contact</a>
+  </nav>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/pages/project-details.js"></script>
+</body>
+</html>

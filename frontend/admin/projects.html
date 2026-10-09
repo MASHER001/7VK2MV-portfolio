@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Projects | Admin</title>
+  <link rel="stylesheet" href="../css/admin.css">
+  <style>
+    .content{max-width:1100px}
+    .head{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1.25rem}
+    .head h1{margin:0}
+    .toolbar{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:1rem}
+    .toolbar input{max-width:280px}.toolbar select{max-width:190px}
+    .table-wrap{overflow-x:auto;padding:0}
+    table{width:100%;border-collapse:collapse;min-width:640px}
+    th{text-align:left;font-size:.78rem;font-weight:500;color:var(--muted);padding:.8rem 1rem;border-bottom:1px solid var(--border);text-transform:uppercase;letter-spacing:.05em}
+    td{padding:.8rem 1rem;border-bottom:1px solid var(--border);vertical-align:middle;font-size:.92rem}
+    tr:last-child td{border-bottom:0}
+    tbody tr:hover{background:#18181c}
+    .proj{display:flex;align-items:center;gap:.8rem;min-width:0}
+    .thumb{width:48px;height:36px;border-radius:7px;background:#25252b center/cover no-repeat;flex:none;border:1px solid var(--border)}
+    .proj b{display:block;font-weight:600}.proj small{color:var(--muted)}
+    .badge{display:inline-block;padding:.12rem .6rem;border-radius:99px;font-size:.75rem;font-weight:500;border:1px solid transparent}
+    .b-Completed{background:rgba(34,197,94,.14);color:#86efac}
+    .b-In\ Progress{background:rgba(109,74,255,.2);color:#c4b5fd}
+    .b-Coming\ Soon{background:rgba(59,130,246,.16);color:#93c5fd}
+    .b-Maintenance{background:rgba(245,158,11,.16);color:#fcd34d}
+    .b-Archived{background:#27272c;color:var(--muted)}
+    .star{color:#fbbf24}
+    .row-actions{display:flex;gap:.4rem;justify-content:flex-end}
+    .btn.sm{padding:.3rem .65rem;font-size:.8rem}
+    .btn.danger{color:#fca5a5}.btn.danger:hover{background:#2a1212}
+    .empty{padding:2.5rem 1rem;text-align:center;color:var(--muted)}
+
+    dialog{background:var(--card);color:var(--text);border:1px solid var(--border);border-radius:14px;padding:0;width:min(740px,94vw);max-height:92vh}
+    dialog::backdrop{background:rgba(0,0,0,.7)}
+    .dlg-head{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.4rem;border-bottom:1px solid var(--border)}
+    .dlg-head h2{margin:0;font-size:1.1rem}
+    .x{background:none;border:0;font-size:1.5rem;line-height:1;color:var(--muted);padding:.1rem .4rem;border-radius:6px}.x:hover{color:var(--text);background:#222227}
+    .dlg-body{padding:1.2rem 1.4rem;overflow-y:auto;max-height:calc(92vh - 140px)}
+    .dlg-foot{display:flex;justify-content:flex-end;gap:.6rem;padding:.9rem 1.4rem;border-top:1px solid var(--border)}
+    .g2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}.g2 .full{grid-column:1/-1}
+    .check{flex-direction:row;align-items:center;gap:.6rem}.check input{width:auto}
+    .preview{width:100%;max-width:240px;height:130px;border-radius:9px;border:1px solid var(--border);background:#1a1a1e center/cover no-repeat;margin-top:.5rem;display:none}
+    #form-error .notice{margin:0 0 1rem}
+    @media (max-width:640px){.g2{grid-template-columns:1fr}}
+  </style>
+</head>
+<body data-admin>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="logo">
+        <svg class="i" viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></svg><span>Portfolio</span>
+      </div>
+      <a href="dashboard.html"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Dashboard</a>
+      <a href="messages.html"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>Messages</a>
+      <a href="projects.html" class="active"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5h6v2"/></svg>Projects</a>
+      <a href="skills.html"><svg class="i" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>Skills</a>
+      <a href="certificates.html"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M8.5 14L7 22l5-3 5 3-1.5-8"/></svg>Certificates</a>
+      <a href="profile.html"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>Profile</a>
+      <div class="spacer"></div>
+      <a href="../index.html"><svg class="i" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v6H4V6h6"/></svg>View site</a>
+      <button class="linkbtn" data-logout type="button"><svg class="i" viewBox="0 0 24 24"><path d="M9 4H4v16h5M16 8l4 4-4 4M20 12H9"/></svg>Log out</button>
+    </aside>
+
+    <div class="main">
+      <header class="topbar"><div class="crumb">Admin / <b>Projects</b></div></header>
+
+      <div class="content">
+        <div class="head">
+          <h1>Projects</h1>
+          <button class="btn primary" id="newBtn" type="button">+ New project</button>
+        </div>
+        <div id="page-error"></div>
+        <div class="toolbar">
+          <input id="search" type="search" placeholder="Search projects" aria-label="Search projects">
+          <select id="statusFilter" aria-label="Filter by status">
+            <option value="">All statuses</option><option>In Progress</option><option>Completed</option>
+            <option>Coming Soon</option><option>Maintenance</option><option>Archived</option>
+          </select>
+        </div>
+        <section class="card table-wrap">
+          <table>
+            <thead><tr><th>Project</th><th>Category</th><th>Status</th><th>Order</th><th></th></tr></thead>
+            <tbody id="rows"><tr><td colspan="5" class="empty">Loading…</td></tr></tbody>
+          </table>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <dialog id="dlg">
+    <form id="pform" novalidate>
+      <div class="dlg-head"><h2 id="dlgTitle">New project</h2><button class="x" type="button" id="closeBtn" aria-label="Close">&times;</button></div>
+      <div class="dlg-body">
+        <div id="form-error"></div>
+        <div class="g2">
+          <div class="field"><label for="title">Title *</label><input id="title" name="title" required maxlength="150"></div>
+          <div class="field"><label for="slug">Slug *</label><input id="slug" name="slug" required maxlength="160" placeholder="my-project"><small>Lowercase letters, numbers and hyphens.</small></div>
+          <div class="field full"><label for="short_description">Short description</label><input id="short_description" name="short_description" maxlength="300"></div>
+          <div class="field full"><label for="description">Description</label><textarea id="description" name="description"></textarea></div>
+          <div class="field"><label for="problem">Problem</label><textarea id="problem" name="problem" style="min-height:80px"></textarea></div>
+          <div class="field"><label for="solution">Solution</label><textarea id="solution" name="solution" style="min-height:80px"></textarea></div>
+          <div class="field"><label for="category">Category</label><input id="category" name="category" placeholder="Full Stack"></div>
+          <div class="field"><label for="status">Status</label>
+            <select id="status" name="status"><option>In Progress</option><option>Completed</option><option>Coming Soon</option><option>Maintenance</option><option>Archived</option></select></div>
+          <div class="field full"><label for="technologies">Technologies</label><input id="technologies" name="technologies" placeholder="HTML, CSS, JavaScript, Python, FastAPI"></div>
+          <div class="field"><label for="github_url">GitHub URL</label><input id="github_url" name="github_url" type="url"></div>
+          <div class="field"><label for="live_url">Live URL</label><input id="live_url" name="live_url" type="url"></div>
+          <div class="field full"><label for="featured_image_url">Featured image</label>
+            <div class="inline"><input id="featured_image_url" name="featured_image_url" type="url" placeholder="Upload an image or paste a link"><button class="btn" type="button" id="imgBtn">Upload</button></div>
+            <input type="file" id="imgFile" accept="image/jpeg,image/png,image/webp,image/gif" hidden>
+            <div class="preview" id="preview"></div></div>
+          <div class="field"><label for="start_date">Start date</label><input id="start_date" name="start_date" type="date"></div>
+          <div class="field"><label for="completion_date">Completion date</label><input id="completion_date" name="completion_date" type="date"></div>
+          <div class="field"><label for="display_order">Display order</label><input id="display_order" name="display_order" type="number" step="1"></div>
+          <div class="field check" style="align-self:end"><input id="is_featured" name="is_featured" type="checkbox"><label for="is_featured">Featured on the home page</label></div>
+        </div>
+      </div>
+      <div class="dlg-foot">
+        <button class="btn" type="button" id="cancelBtn">Cancel</button>
+        <button class="btn primary" type="submit" id="saveBtn">Save project</button>
+      </div>
+    </form>
+  </dialog>
+  <div class="toast" id="toast" role="status"></div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/pages/admin/projects.js"></script>
+</body>
+</html>

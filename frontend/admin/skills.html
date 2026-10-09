@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Skills | Admin</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/admin.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body data-admin>
+  <div class="admin">
+    <aside class="sidebar">
+      <h2>Admin</h2>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="messages.html">Messages</a>
+      <a href="projects.html">Projects</a>
+      <a href="skills.html">Skills</a>
+      <a href="certificates.html">Certificates</a>
+      <a href="profile.html">Profile</a>
+      <a href="../index.html">View site</a>
+      <a href="#" data-logout>Log out</a>
+    </aside>
+
+    <main class="admin-main">
+      <h1>Skills</h1>
+      <div id="page-error"></div>
+
+      <div class="toolbar">
+        <input id="search" type="search" placeholder="Search skills…">
+        <select id="catFilter" aria-label="Filter by category"></select>
+        <button id="newBtn" class="btn primary" type="button">New skill</button>
+      </div>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Skill</th>
+            <th>Category</th>
+            <th>Proficiency</th>
+            <th>Order</th>
+            <th aria-label="Actions"></th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+
+      <dialog id="dlg" class="dialog">
+        <form id="sform" method="dialog">
+          <h2 id="dlgTitle">New skill</h2>
+          <div id="form-error"></div>
+
+          <label>Name
+            <input name="name" type="text" required>
+          </label>
+          <label>Category
+            <input name="category" type="text" required>
+          </label>
+          <label>Description
+            <textarea name="description" rows="3"></textarea>
+          </label>
+          <label>Icon
+            <input name="icon" type="text" placeholder="e.g. 🐍 or an icon slug">
+          </label>
+          <label>Proficiency (0–100)
+            <input name="proficiency" type="number" min="0" max="100">
+          </label>
+          <label class="inline">
+            <input name="is_learning" type="checkbox"> Currently learning
+          </label>
+          <label class="inline">
+            <input name="is_featured" type="checkbox"> Featured
+          </label>
+          <label>Display order
+            <input name="display_order" type="number" value="0">
+          </label>
+
+          <div class="dialog-actions">
+            <button id="cancelBtn" class="btn" type="button">Cancel</button>
+            <button id="closeBtn" class="btn" type="button">Close</button>
+            <button id="saveBtn" class="btn primary" type="submit">Save</button>
+          </div>
+        </form>
+      </dialog>
+
+      <div id="toast" class="toast"></div>
+    </main>
+  </div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/pages/admin/skills.js"></script>
+</body>
+</html>

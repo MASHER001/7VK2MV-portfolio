@@ -1,0 +1,269 @@
+/* Tablet */
+@media (max-width: 950px) {
+  .portfolio {
+    width: 95vw;
+    height: auto;
+    min-height: 680px;
+    padding: 30px 25px;
+  }
+
+  .title {
+    font-size: 68px;
+  }
+
+  .red-bar {
+    width: 30px;
+    height: 110px;
+  }
+
+  .cards {
+    width: 100%;
+    height: 280px;
+  }
+
+  .card {
+    width: 130px;
+    height: 200px;
+  }
+
+  .card-1 { left: 5%;  }
+  .card-2 { left: 22%; }
+  .card-3 { left: 40%; }
+  .card-4 { left: 58%; }
+  .card-5 { left: 76%; }
+
+  .name, .role {
+    font-size: 12px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .portfolio {
+    min-height: 620px;
+    border-radius: 16px;
+  }
+
+  .title {
+    font-size: 42px;
+    letter-spacing: -2px;
+  }
+
+  .red-bar {
+    width: 20px;
+    height: 70px;
+    top: -5px;
+  }
+
+  .title-wrapper {
+    top: 80px;
+  }
+
+  .name, .role {
+    top: 175px;
+    font-size: 11px;
+  }
+
+  .cards {
+    height: 240px;
+    bottom: 80px;
+  }
+
+  .card {
+    width: 95px;
+    height: 150px;
+    border-radius: 12px;
+  }
+
+  .card-1 { left: 2%;  bottom: 10px; transform: rotate(-15deg); }
+  .card-2 { left: 20%; bottom: 25px; transform: rotate(-6deg);  }
+  .card-3 { left: 38%; bottom: 35px; transform: rotate(1deg);   }
+  .card-4 { left: 56%; bottom: 20px; transform: rotate(10deg);  }
+  .card-5 { left: 74%; bottom: 5px;  transform: rotate(16deg);  }
+
+  .spiral { width: 70px; height: 70px; }
+  .eye-logo { width: 55px; height: 55px; border-width: 5px; }
+  .eye-logo::before { width: 16px; height: 16px; }
+  .ratio { font-size: 32px; }
+  .circle-pattern { width: 65px; height: 65px; }
+
+  .me-badge {
+    bottom: 25px;
+    padding: 6px 16px;
+    font-size: 12px;
+  }
+}
+/* =====================================================================
+   responsive.css - breakpoints for the shared site design (see styles.css)
+   ===================================================================== */
+@media (min-width:900px){
+  .page{padding:1.8rem 3rem 3rem}
+  .label{font-size:.7rem}
+}
+@media (max-width:860px){
+  .grid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+}
+@media (max-width:560px){
+  .grid{grid-template-columns:1fr}
+  .titlebox{padding:2rem 0}
+  .filters{gap:.4rem}
+  .pill{padding:.5rem .85rem}
+  .skill-top{gap:.65rem}
+}
+@media (max-width:360px){
+  .page{padding:1rem .8rem 2.5rem}
+}
+
+/* Legacy admin pages (old dark theme) - only when <body data-admin> */
+@media (max-width:900px){[data-admin] .grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:700px){
+  [data-admin] .grid{grid-template-columns:1fr}
+  [data-admin] .container{padding:1.25rem 1rem}
+  [data-admin] .admin{grid-template-columns:1fr}
+  [data-admin] .sidebar{flex-direction:row;flex-wrap:wrap;border-right:0;border-bottom:1px solid var(--border)}
+  [data-admin] .sidebar h2{width:100%;margin-bottom:.4rem}
+  [data-admin] .admin-main{padding:1rem}
+  [data-admin] table{display:block;overflow-x:auto}
+}
+/* =====================================================================
+   responsive.css - breakpoints for every public page (home, about, skills,
+   projects, project details, certificates, contact).
+   Admin pages do not load this file (their rules live in admin.css and
+   admin-settings.css).
+
+   ORDER MATTERS: link this file LAST, after styles.css, animations.css and
+   any page stylesheet (index.css, ...), so it can adjust their sizes:
+     styles.css -> animations.css -> index.css -> responsive.css
+
+   Mobile first. Bands:
+     base     phones            up to 600px
+     601px+   tablets
+     951px+   desktops
+     1600px+  large screens
+   plus layout collapses (860px, 560px), short landscape phones,
+   touch devices, notches, and print.
+   ===================================================================== */
+
+/* ---------- design tokens that change per size ---------- */
+:root{
+  --gutter:1.2rem;                       /* left / right page padding */
+  --top:1.4rem;                          /* top page padding */
+  --w:clamp(104px,29vw,132px);           /* home page card width (height = 1.4 x width) */
+  --step:14deg;                          /* angle between neighbouring home cards */
+}
+
+/* ---------- shared page frame (respects phone notches) ---------- */
+.page,.hero{
+  padding-top:var(--top);
+  padding-left:max(var(--gutter),env(safe-area-inset-left,0px));
+  padding-right:max(var(--gutter),env(safe-area-inset-right,0px));
+}
+
+/* ---------- home page, phone sizes (base) ---------- */
+.hero .word{font-size:clamp(2.2rem,10.5vw,8.5rem)}
+.arrow{top:calc(var(--top) + 6.9rem)}
+.ring{margin-inline:calc(var(--gutter)*-1)}
+.menu{padding:2rem 1.6rem}
+
+/* =====================================================================
+   Tablets (601px and up)
+   ===================================================================== */
+@media (min-width:601px){
+  :root{--gutter:1.6rem;--top:1.6rem;--w:clamp(120px,20vw,175px);--step:13deg}
+  .label{font-size:.64rem}
+  .arrow{top:calc(var(--top) + 8rem)}
+  .menu{padding:2rem 8vw}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+}
+
+/* =====================================================================
+   Desktops (951px and up)
+   ===================================================================== */
+@media (min-width:951px){
+  :root{--gutter:3rem;--top:1.8rem;--w:clamp(150px,15vw,210px)}
+  .label{font-size:.7rem}
+  .arrow{top:calc(var(--top) + 9rem)}
+  .arrow.left{left:1rem}.arrow.right{right:1rem}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(270px,1fr))}
+}
+
+/* =====================================================================
+   Large screens (1600px and up)
+   ===================================================================== */
+@media (min-width:1600px){
+  :root{--w:clamp(210px,13vw,250px)}
+  .page{max-width:1320px}
+}
+
+/* =====================================================================
+   Layouts that collapse to one column (page-specific classes)
+   ===================================================================== */
+@media (max-width:860px){
+  .layout{grid-template-columns:1fr}          /* project details: content + facts */
+  .two{grid-template-columns:1fr}             /* contact form: name + email */
+  .photo{aspect-ratio:16/10}                  /* about page picture */
+}
+
+/* =====================================================================
+   Phones (600px and below)
+   ===================================================================== */
+@media (max-width:600px){
+  .titlebox{padding:2rem 0}
+  .grid{grid-template-columns:1fr}
+  .shots{grid-template-columns:1fr 1fr}       /* project screenshots stay two-up */
+
+  /* filters scroll sideways instead of wrapping into many rows */
+  .filters{flex-wrap:nowrap;overflow-x:auto;gap:.4rem;margin-inline:calc(var(--gutter)*-1);padding-inline:var(--gutter);scrollbar-width:none}
+  .filters::-webkit-scrollbar{display:none}
+  .filters .pill{flex:none;padding:.5rem .85rem}
+  .controls input{max-width:none}
+
+  .skill-top{gap:.65rem}.ico{width:40px;height:40px}
+  .cta{flex-direction:column;align-items:flex-start}
+  .pager{grid-template-columns:1fr}.pager a.next{grid-column:1}
+  .card{padding:1.2rem}
+
+  /* image viewer: keep the controls on screen */
+  .lb .x{top:.4rem;right:.4rem}.lb .prev{left:.2rem}.lb .nxt{right:.2rem}
+  .menu-tip{font-size:.52rem;padding:.4rem .7rem}
+}
+
+/* very small phones */
+@media (max-width:380px){
+  :root{--gutter:.9rem;--w:100px}
+  .page{padding-bottom:2.5rem}
+  .shots{grid-template-columns:1fr}
+}
+
+/* =====================================================================
+   Short landscape phones: save vertical space on the home page
+   ===================================================================== */
+@media (max-height:520px) and (orientation:landscape){
+  .hero{min-height:auto;padding-bottom:1.5rem}
+  .titlebox{padding:1.2rem 0}
+  .ring{display:none}
+  .stage{margin-top:1rem}
+  .menu{overflow-y:auto;justify-content:flex-start;padding-top:4rem}
+  .menu a{font-size:clamp(1.3rem,6vh,2.2rem)}
+}
+
+/* =====================================================================
+   Touch devices: bigger tap targets
+   ===================================================================== */
+@media (pointer:coarse){
+  .menu-btn{width:44px;height:44px}
+  .arrow{width:44px;height:44px}
+  .pill{min-height:40px;display:inline-flex;align-items:center}
+  .lb button{width:46px;height:46px}
+}
+
+/* =====================================================================
+   Print: clean page, no navigation or decoration
+   ===================================================================== */
+@media print{
+  body.site{background:#fff}
+  .menu,.menu-btn,.menu-wrap,.arrow,.ring,.stage,.plus,.slab,.filters,.controls,.btns,.pager,.cta{display:none!important}
+  .reveal{opacity:1!important;transform:none!important}
+  .page,.hero{max-width:none;padding:0}
+  .card{break-inside:avoid;box-shadow:none}
+}

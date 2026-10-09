@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Admin login</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💼</text></svg>">
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+  <main class="login-wrap">
+    <form id="login-form" class="card login-card" novalidate>
+      <div class="logo">
+        <svg class="i" viewBox="0 0 24 24" style="width:30px;height:30px"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></svg><span>Portfolio</span>
+      </div>
+      <h1>Admin login</h1>
+      <p class="sub">Sign in to manage your portfolio.</p>
+
+      <div class="field">
+        <label for="email">Email</label>
+        <div class="with-icon">
+          <svg class="i" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+          <input id="email" name="email" type="email" required autocomplete="username" placeholder="you@example.com">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="password">Password</label>
+        <div class="pw">
+          <input id="password" name="password" type="password" required autocomplete="current-password">
+          <button type="button" id="togglePw" aria-label="Show password">Show</button>
+        </div>
+      </div>
+
+      <button class="btn primary" type="submit" id="submitBtn">Sign in</button>
+      <div id="login-result" role="alert"></div>
+      <a class="back" href="../index.html">&larr; Back to site</a>
+    </form>
+  </main>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/pages/admin/login.js"></script>
+</body>
+</html>

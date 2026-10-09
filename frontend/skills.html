@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Skills | Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body class="page-skills">
+  <a class="back-btn" href="index.html" aria-label="Back to home">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <line x1="19" y1="12" x2="5" y2="12"/>
+      <polyline points="12 19 5 12 12 5"/>
+    </svg>
+    <span>Back</span>
+  </a>
+
+  <main class="skills-page">
+    <header class="skills-hero">
+      <div class="slab"></div>
+      <h1 class="word" id="word" data-word="SKILLS" aria-label="Skills"></h1>
+      <p class="meta label" id="role">Full-Stack Web Developer</p>
+    </header>
+
+    <section class="skills-controls">
+      <input type="search" id="search" placeholder="Search skills…" aria-label="Search skills">
+      <div class="filters" id="filters" role="group" aria-label="Filter by category"></div>
+    </section>
+
+    <p class="label count" id="count"></p>
+
+    <section class="skills-groups" id="groups" aria-live="polite">
+      <p class="muted label">Loading…</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-left">
+      <a href="admin/login.html" class="admin-link" aria-label="Admin panel">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="16 18 22 12 16 6"/>
+          <polyline points="8 6 2 12 8 18"/>
+        </svg>
+        <span class="admin-tip">Admin</span>
+      </a>
+    </div>
+    <div class="footer-center">
+      <p class="copyright">© <span id="year">2026</span> <span id="footer-name">Victor Lewis Machariah</span></p>
+    </div>
+    <div class="footer-right">
+      <p class="made-with">
+        Made with <span class="heart" aria-label="love">❤️</span> by <strong>MACHARIA VICTOR LEWIS</strong>
+      </p>
+    </div>
+  </footer>
+
+  <nav class="menu" id="menu" aria-label="Main menu">
+    <button class="close" id="menuClose" aria-label="Close menu">&times;</button>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="skills.html">Skills</a>
+    <a href="projects.html">Projects</a>
+    <a href="certificates.html">Certificates</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/pages/skills.js"></script>
+</body>
+</html>

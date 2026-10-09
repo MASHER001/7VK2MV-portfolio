@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Certificates | Admin</title>
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body data-admin>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="logo">
+        <svg class="i" viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></svg><span>Portfolio</span>
+      </div>
+      <a href="dashboard.html"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Dashboard</a>
+      <a href="messages.html"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>Messages</a>
+      <a href="projects.html"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5h6v2"/></svg>Projects</a>
+      <a href="skills.html"><svg class="i" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>Skills</a>
+      <a href="certificates.html" class="active"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M8.5 14L7 22l5-3 5 3-1.5-8"/></svg>Certificates</a>
+      <a href="profile.html"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>Profile</a>
+      <div class="spacer"></div>
+      <a href="../index.html"><svg class="i" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v6H4V6h6"/></svg>View site</a>
+      <button class="linkbtn" data-logout type="button"><svg class="i" viewBox="0 0 24 24"><path d="M9 4H4v16h5M16 8l4 4-4 4M20 12H9"/></svg>Log out</button>
+    </aside>
+
+    <div class="main">
+      <header class="topbar">
+        <div class="crumb">Admin / <b>Certificates</b></div>
+      </header>
+
+      <div class="content">
+        <div class="head">
+          <h1>Certificates</h1>
+          <button class="btn primary" id="newBtn" type="button">+ New certificate</button>
+        </div>
+
+        <div id="page-error"></div>
+
+        <div class="toolbar">
+          <input id="search" type="search" placeholder="Search certificates" aria-label="Search certificates">
+          <select id="catFilter" aria-label="Filter by category"></select>
+        </div>
+
+        <section class="card table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Certificate</th>
+                <th>Category</th>
+                <th>Issued</th>
+                <th>Validity</th>
+                <th>Order</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="rows">
+              <tr><td colspan="6" class="empty">Loading…</td></tr>
+            </tbody>
+          </table>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       Dialog — New/Edit certificate
+       Structure: .dlg-head | .dlg-body (scrollable) | .dlg-foot
+       ============================================================ -->
+  <dialog id="dlg">
+    <form id="cform" novalidate>
+
+      <div class="dlg-head">
+        <h2 id="dlgTitle">New certificate</h2>
+        <button class="x" type="button" id="closeBtn" aria-label="Close">&times;</button>
+      </div>
+
+      <div class="dlg-body">
+        <div id="form-error"></div>
+
+        <div class="g2">
+          <div class="field">
+            <label for="title">Title *</label>
+            <input id="title" name="title" required maxlength="200">
+          </div>
+
+          <div class="field">
+            <label for="issuer">Issuer *</label>
+            <input id="issuer" name="issuer" required maxlength="150">
+          </div>
+
+          <div class="field">
+            <label for="category">Category</label>
+            <input id="category" name="category" maxlength="80">
+          </div>
+
+          <div class="field">
+            <label for="issue_date">Issue date</label>
+            <input id="issue_date" name="issue_date" type="date">
+          </div>
+
+          <div class="field">
+            <label for="expiry_date">Expiry date</label>
+            <input id="expiry_date" name="expiry_date" type="date">
+          </div>
+
+          <div class="field">
+            <label for="credential_id">Credential ID</label>
+            <input id="credential_id" name="credential_id" maxlength="120">
+          </div>
+
+          <div class="field full">
+            <label for="credential_url">Credential URL</label>
+            <input id="credential_url" name="credential_url" type="url" placeholder="https://example.com/verify">
+          </div>
+
+          <div class="field full">
+            <label for="description">Description</label>
+            <textarea id="description" name="description" maxlength="1000" style="min-height:90px"></textarea>
+          </div>
+
+          <div class="field full">
+            <label for="image_url">Image URL</label>
+            <div class="inline">
+              <input id="image_url" name="image_url" type="url" placeholder="Upload an image or paste a link">
+              <button class="btn" type="button" id="imgBtn">Upload</button>
+            </div>
+            <input type="file" id="imgFile" accept="image/jpeg,image/png,image/webp,image/gif" hidden>
+            <div class="preview" id="preview"></div>
+          </div>
+
+          <div class="field full">
+            <label for="pdf_url">PDF URL</label>
+            <div class="inline">
+              <input id="pdf_url" name="pdf_url" type="url" placeholder="Upload a PDF or paste a link">
+              <button class="btn" type="button" id="pdfBtn">Upload PDF</button>
+            </div>
+            <input type="file" id="pdfFile" accept="application/pdf" hidden>
+          </div>
+
+          <div class="field">
+            <label for="display_order">Display order</label>
+            <input id="display_order" name="display_order" type="number" step="1" value="0">
+          </div>
+
+          <div class="field check" style="align-self:end">
+            <input id="is_featured" name="is_featured" type="checkbox">
+            <label for="is_featured">Featured on the home page</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="dlg-foot">
+        <button class="btn" type="button" id="cancelBtn">Cancel</button>
+        <button class="btn primary" type="submit" id="saveBtn">Save certificate</button>
+      </div>
+
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/pages/admin/certificate.js"></script>
+</body>
+</html>
