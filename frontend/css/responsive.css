@@ -1,130 +1,3 @@
-/* Tablet */
-@media (max-width: 950px) {
-  .portfolio {
-    width: 95vw;
-    height: auto;
-    min-height: 680px;
-    padding: 30px 25px;
-  }
-
-  .title {
-    font-size: 68px;
-  }
-
-  .red-bar {
-    width: 30px;
-    height: 110px;
-  }
-
-  .cards {
-    width: 100%;
-    height: 280px;
-  }
-
-  .card {
-    width: 130px;
-    height: 200px;
-  }
-
-  .card-1 { left: 5%;  }
-  .card-2 { left: 22%; }
-  .card-3 { left: 40%; }
-  .card-4 { left: 58%; }
-  .card-5 { left: 76%; }
-
-  .name, .role {
-    font-size: 12px;
-  }
-}
-
-/* Mobile */
-@media (max-width: 600px) {
-  .portfolio {
-    min-height: 620px;
-    border-radius: 16px;
-  }
-
-  .title {
-    font-size: 42px;
-    letter-spacing: -2px;
-  }
-
-  .red-bar {
-    width: 20px;
-    height: 70px;
-    top: -5px;
-  }
-
-  .title-wrapper {
-    top: 80px;
-  }
-
-  .name, .role {
-    top: 175px;
-    font-size: 11px;
-  }
-
-  .cards {
-    height: 240px;
-    bottom: 80px;
-  }
-
-  .card {
-    width: 95px;
-    height: 150px;
-    border-radius: 12px;
-  }
-
-  .card-1 { left: 2%;  bottom: 10px; transform: rotate(-15deg); }
-  .card-2 { left: 20%; bottom: 25px; transform: rotate(-6deg);  }
-  .card-3 { left: 38%; bottom: 35px; transform: rotate(1deg);   }
-  .card-4 { left: 56%; bottom: 20px; transform: rotate(10deg);  }
-  .card-5 { left: 74%; bottom: 5px;  transform: rotate(16deg);  }
-
-  .spiral { width: 70px; height: 70px; }
-  .eye-logo { width: 55px; height: 55px; border-width: 5px; }
-  .eye-logo::before { width: 16px; height: 16px; }
-  .ratio { font-size: 32px; }
-  .circle-pattern { width: 65px; height: 65px; }
-
-  .me-badge {
-    bottom: 25px;
-    padding: 6px 16px;
-    font-size: 12px;
-  }
-}
-/* =====================================================================
-   responsive.css - breakpoints for the shared site design (see styles.css)
-   ===================================================================== */
-@media (min-width:900px){
-  .page{padding:1.8rem 3rem 3rem}
-  .label{font-size:.7rem}
-}
-@media (max-width:860px){
-  .grid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
-}
-@media (max-width:560px){
-  .grid{grid-template-columns:1fr}
-  .titlebox{padding:2rem 0}
-  .filters{gap:.4rem}
-  .pill{padding:.5rem .85rem}
-  .skill-top{gap:.65rem}
-}
-@media (max-width:360px){
-  .page{padding:1rem .8rem 2.5rem}
-}
-
-/* Legacy admin pages (old dark theme) - only when <body data-admin> */
-@media (max-width:900px){[data-admin] .grid{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:700px){
-  [data-admin] .grid{grid-template-columns:1fr}
-  [data-admin] .container{padding:1.25rem 1rem}
-  [data-admin] .admin{grid-template-columns:1fr}
-  [data-admin] .sidebar{flex-direction:row;flex-wrap:wrap;border-right:0;border-bottom:1px solid var(--border)}
-  [data-admin] .sidebar h2{width:100%;margin-bottom:.4rem}
-  [data-admin] .admin-main{padding:1rem}
-  [data-admin] table{display:block;overflow-x:auto}
-}
 /* =====================================================================
    responsive.css - breakpoints for every public page (home, about, skills,
    projects, project details, certificates, contact).
@@ -266,4 +139,173 @@
   .reveal{opacity:1!important;transform:none!important}
   .page,.hero{max-width:none;padding:0}
   .card{break-inside:avoid;box-shadow:none}
+}
+
+/* =====================================================================
+   ABOUT PAGE — collapse the two-column layout on tablets and phones
+   ===================================================================== */
+@media (max-width:860px){
+  .page-about .grid{
+    grid-template-columns:1fr;
+    gap:1.2rem;
+    margin-top:1.5rem;
+  }
+  .page-about .photo{
+    aspect-ratio:16/10;
+    max-height:340px;
+  }
+  .page-about .photo .mono{
+    font-size:clamp(3rem,12vw,5rem);
+  }
+  .page-about .stack{
+    gap:1.2rem;
+  }
+}
+
+@media (max-width:600px){
+  .page-about .grid{
+    margin-top:1.2rem;
+    gap:1rem;
+  }
+  .page-about .photo{
+    aspect-ratio:4/3;
+    max-height:260px;
+  }
+  .page-about .photo .mono{
+    font-size:clamp(2.5rem,14vw,3.5rem);
+  }
+  .page-about .name{
+    font-size:1.35rem;
+  }
+  .page-about .bio{
+    font-size:.95rem;
+    line-height:1.7;
+  }
+  .page-about .fact{
+    font-size:.88rem;
+    padding:.55rem 0;
+  }
+  .page-about .links{
+    gap:.4rem;
+  }
+  .page-about .cta{
+    flex-direction:column;
+    align-items:flex-start;
+    padding:1.2rem;
+    margin-top:1.6rem;
+  }
+  .page-about .cta h3{
+    font-size:1.15rem;
+    line-height:1.3;
+  }
+}
+
+/* =====================================================================
+   SKILLS PAGE — scale the headline, keep cards from overflowing
+   ===================================================================== */
+
+@media (max-width:860px){
+  .skills-page{
+    padding:0 var(--gutter) 2rem;
+  }
+  .skills-hero{
+    padding:4rem 0 1.5rem;
+  }
+  .skills-hero .word{
+    font-size:clamp(1.8rem,11vw,3rem);
+  }
+  .skills-hero .slab{
+    top:3.8rem;
+    bottom:3.5rem;
+    width:clamp(48px,11%,88px);
+  }
+  .skills-hero .meta{
+    margin-top:.9rem;
+    font-size:.58rem;
+  }
+  .skills-groups{
+    gap:1.8rem;
+  }
+  .skills-groups .group h2{
+    font-size:.65rem;
+  }
+  /* override the more specific selector so the phone rule actually applies */
+  .skills-groups .group .grid,
+  .page-skills .skills-groups .grid{
+    grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+    gap:1rem;
+  }
+}
+
+@media (max-width:600px){
+  .skills-hero{
+    padding:3.4rem 0 1.2rem;
+  }
+  .skills-hero .word{
+    font-size:clamp(1.6rem,13vw,2.4rem);
+  }
+  .skills-hero .slab{
+    top:3.2rem;
+    bottom:2.8rem;
+    width:clamp(40px,10%,70px);
+  }
+  .skills-controls{
+    gap:.6rem;
+    margin-bottom:1.2rem;
+  }
+  .skills-controls input[type="search"]{
+    font-size:.82rem;
+    padding:.65rem .95rem;
+  }
+  .skills-groups .group .grid,
+  .page-skills .skills-groups .grid{
+    grid-template-columns:1fr;
+    gap:.9rem;
+  }
+  .page-skills .card.skill{
+    padding:1rem;
+    gap:.55rem;
+  }
+  .page-skills .ico{
+    width:38px;
+    height:38px;
+    font-size:.95rem;
+  }
+  .page-skills .skill-top h3{
+    font-size:.92rem;
+  }
+  .page-skills .desc{
+    font-size:.86rem;
+    line-height:1.5;
+  }
+  .meter{
+    height:6px;
+  }
+  .meter-row b{
+    font-size:.68rem;
+  }
+  .back-btn{
+    top:.6rem;
+    left:.6rem;
+    padding:.4rem .7rem .4rem .55rem;
+    font-size:.55rem;
+  }
+  .back-btn svg{
+    width:13px;
+    height:13px;
+  }
+}
+
+@media (max-width:380px){
+  .skills-hero .word{
+    font-size:1.5rem;
+  }
+  .page-skills .card.skill{
+    padding:.85rem;
+  }
+  .page-skills .ico{
+    width:34px;
+    height:34px;
+    font-size:.85rem;
+  }
 }
