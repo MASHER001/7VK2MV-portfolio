@@ -144,3 +144,15 @@ document.addEventListener("DOMContentLoaded", () => {
       .catch(() => {});
   }
 });
+/* =====================================================================
+   Expose helpers on `window` so page scripts can use them via window.X
+   (Functions declared with `function` are auto-attached; const/let are not.)
+   ===================================================================== */
+window.request    = request;
+window.api        = api;
+window.el         = el;
+window.safeUrl    = safeUrl;
+window.listOf     = listOf;
+window.showError  = showError;
+window.getProfile = getProfile;
+window.initReveal = initReveal;
