@@ -19,11 +19,20 @@ app = FastAPI(
 # CORS Configuration
 # --------------------------------------------------
 
-# During development, allow the frontend to communicate
-# with the FastAPI backend.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Restrict this before production
+    allow_origins=[
+        # Local development
+        "http://localhost:5500",
+        "http://127.0.0.1:5500",
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+
+        # Production — Vercel
+        "https://7vk2mv-portfolio-frontend.vercel.app",
+    ],
+    # Also allow Vercel preview deployments (branch builds)
+    allow_origin_regex=r"https://7vk2mv-portfolio-frontend-.*\.vercel\.app",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -34,8 +43,6 @@ app.add_middleware(
 # Route Registration
 # --------------------------------------------------
 
-# Each route module defines its own prefix and tags
-# inside the router (e.g. APIRouter(prefix="/api/profile")).
 app.include_router(profile.router)
 app.include_router(projects.router)
 app.include_router(skills.router)
