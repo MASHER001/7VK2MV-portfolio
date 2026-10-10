@@ -1,16 +1,26 @@
-/* =====================================================================
-   config.js — frontend configuration
-   Values are attached to `window` so any script can read them.
-   ===================================================================== */
+// config.js
+// Single place to configure the frontend.
 
-/* Detect whether we're running locally or in production */
+// -----------------------------------------------------------------------------
+// Backend API
+// -----------------------------------------------------------------------------
+
+// Local development: FastAPI running on uvicorn
+// Production: deployed on Fly.io
 const IS_LOCAL = ["localhost", "127.0.0.1"].includes(location.hostname);
 
-/* Backend API URL */
 window.API_BASE = IS_LOCAL
-  ? "http://127.0.0.1:8000"                            // local dev
-  : "https://portfolio-machariah-api.fly.dev";         // production (Fly.io)
+  ? "http://127.0.0.1:8000"
+  : "https://portfolio-machariah-api.fly.dev";
 
-/* Supabase — publishable key only, never the secret key */
+// -----------------------------------------------------------------------------
+// Supabase
+// -----------------------------------------------------------------------------
+
+// Project URL — from Supabase Dashboard → Settings → API → Project URL
 window.SUPABASE_URL = "https://znwsinceeqaqievnedhb.supabase.co";
-window.SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...";
+
+// Anon (publishable) key — legacy JWT format.
+// This is PUBLIC and safe to embed in frontend code. RLS protects your data.
+// NEVER put the service_role / secret key here.
+window.SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpud3NpbmNlZXFhcWlldm5lZGhiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ2MTg1NDYsImV4cCI6MjEwMDE5NDU0Nn0.Xlwu7h4acgNVjwdyqWL2LAe5tVuEy-gnO0-63lh3gas";
