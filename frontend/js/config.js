@@ -6,12 +6,12 @@
 // -----------------------------------------------------------------------------
 
 // Local development: FastAPI running on uvicorn
-// Production: deployed on Fly.io
+// Production: deployed on Vercel
 const IS_LOCAL = ["localhost", "127.0.0.1"].includes(location.hostname);
 
 window.API_BASE = IS_LOCAL
   ? "http://127.0.0.1:8000"
-  : "https://portfolio-machariah-api.fly.dev";
+  : "https://7-vk-2-mv-backend.vercel.app";
 
 // -----------------------------------------------------------------------------
 // Supabase
