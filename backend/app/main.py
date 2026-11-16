@@ -1,3 +1,5 @@
+import os
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -18,21 +20,33 @@ app = FastAPI(
 # --------------------------------------------------
 # CORS Configuration
 # --------------------------------------------------
+# Each origin must match exactly: https://, no trailing slash, no path.
+# To add another address without editing code, set CORS_ORIGINS in Vercel
+# (Settings -> Environment Variables) as a comma-separated list.
+
+ALLOWED_ORIGINS = [
+    # Local development
+    "http://localhost:5500",
+    "http://127.0.0.1:5500",
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+
+    # Production — Vercel
+    "https://victor-machariah.vercel.app",           # current address
+    "https://7vk2mv-portfolio-frontend.vercel.app",  # old address
+]
+
+ALLOWED_ORIGINS += [
+    o.strip().rstrip("/")
+    for o in os.getenv("CORS_ORIGINS", "").split(",")
+    if o.strip()
+]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        # Local development
-        "http://localhost:5500",
-        "http://127.0.0.1:5500",
-        "http://localhost:3000",
-        "http://127.0.0.1:3000",
-
-        # Production — Vercel
-        "https://7vk2mv-portfolio-frontend.vercel.app",
-    ],
-    # Also allow Vercel preview deployments (branch builds)
-    allow_origin_regex=r"https://7vk2mv-portfolio-frontend-.*\.vercel\.app",
+    allow_origins=ALLOWED_ORIGINS,
+    # Also allow Vercel preview deployments (branch builds) of either project name
+    allow_origin_regex=r"https://(victor-machariah|7vk2mv-portfolio-frontend)-.*\.vercel\.app",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
