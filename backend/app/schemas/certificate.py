@@ -5,8 +5,9 @@ Location: backend/app/schemas/certificate.py
 Defines the shapes the API accepts and returns for /api/certificates.
 """
 
-from datetime import date
+from datetime import date, datetime
 from typing import Optional
+from uuid import UUID
 
 from pydantic import BaseModel, Field, HttpUrl, model_validator
 
@@ -69,14 +70,27 @@ class CertificateUpdate(BaseModel):
     is_featured: Optional[bool] = None
     display_order: Optional[int] = None
 
+    @model_validator(mode="after")
+    def check_dates(self):
+        """Expiry must be on or after issue date, when both are sent."""
+        if self.issue_date and self.expiry_date:
+            if self.expiry_date < self.issue_date:
+                raise ValueError("expiry_date must be on or after issue_date")
+        return self
 
-# ---------- Response (public) ----------
+
+# ---------- Response ----------
 
 class CertificateResponse(BaseModel):
     """
-    Used by GET /api/certificates and GET /api/certificates/featured.
-    No id, no timestamps.
+    Used by GET /api/certificates and GET /api/certificates/featured,
+    and returned after create/update.
+
+    Includes id (and timestamps) so the admin panel can edit and delete.
+    The id is a random UUID, not a secret; writes are still admin-only.
     """
+
+    id: UUID
 
     title: str
     issuer: str
@@ -95,5 +109,7 @@ class CertificateResponse(BaseModel):
     is_featured: bool = False
     display_order: int = 0
 
-    class Config:
-        from_attributes = True
+    created_at: Optional[datetime] = None
+    updated_at: Optional[datetime] = None
+
+    model_config = {"from_attributes": True}

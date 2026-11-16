@@ -5,22 +5,34 @@ Location: backend/app/schemas/skill.py
 Defines the shapes the API accepts and returns for /api/skills.
 """
 
+from datetime import datetime
 from typing import Optional
+from uuid import UUID
 
 from pydantic import BaseModel, Field, field_validator
 
 
 # Category whitelist — matches section 14 of the backend doc.
-# Delete this and the validators below if you want free-form categories.
+# Delete ALLOWED_CATEGORIES and the check_category validators below
+# if you want free-form categories.
 ALLOWED_CATEGORIES = {
     "Programming",
     "Frontend",
     "Backend",
     "Database",
+    "Cybersecurity",
     "Development Tools",
     "Design",
     "Currently Learning",
 }
+
+
+def _validate_category(v: Optional[str]) -> Optional[str]:
+    if v is not None and v not in ALLOWED_CATEGORIES:
+        raise ValueError(
+            f"Invalid category '{v}'. Allowed: {sorted(ALLOWED_CATEGORIES)}"
+        )
+    return v
 
 
 # ---------- Create (admin) ----------
@@ -38,20 +50,16 @@ class SkillCreate(BaseModel):
     is_featured: bool = False
     display_order: int = 0
 
-    @field_validator("name", "category")
+    # mode="before" so whitespace is stripped BEFORE length/whitelist checks
+    @field_validator("name", "category", mode="before")
     @classmethod
-    def strip_whitespace(cls, v: str) -> str:
-        return v.strip()
+    def strip_whitespace(cls, v):
+        return v.strip() if isinstance(v, str) else v
 
     @field_validator("category")
     @classmethod
     def check_category(cls, v: str) -> str:
-        if v not in ALLOWED_CATEGORIES:
-            raise ValueError(
-                f"Invalid category '{v}'. "
-                f"Allowed: {sorted(ALLOWED_CATEGORIES)}"
-            )
-        return v
+        return _validate_category(v)
 
 
 # ---------- Update (admin, partial) ----------
@@ -69,26 +77,28 @@ class SkillUpdate(BaseModel):
     is_featured: Optional[bool] = None
     display_order: Optional[int] = None
 
-    @field_validator("name", "category")
+    @field_validator("name", "category", mode="before")
     @classmethod
-    def strip_whitespace(cls, v: Optional[str]) -> Optional[str]:
-        return v.strip() if v is not None else v
+    def strip_whitespace(cls, v):
+        return v.strip() if isinstance(v, str) else v
 
     @field_validator("category")
     @classmethod
     def check_category(cls, v: Optional[str]) -> Optional[str]:
-        if v is not None and v not in ALLOWED_CATEGORIES:
-            raise ValueError(
-                f"Invalid category '{v}'. "
-                f"Allowed: {sorted(ALLOWED_CATEGORIES)}"
-            )
-        return v
+        return _validate_category(v)
 
 
-# ---------- Response (public) ----------
+# ---------- Response ----------
 
 class SkillResponse(BaseModel):
-    """Used by GET /api/skills. No id, no timestamps."""
+    """
+    Used by GET /api/skills and returned after create/update.
+
+    Includes id (and timestamps) so the admin panel can edit and delete.
+    The id is a random UUID, not a secret; writes are still admin-only.
+    """
+
+    id: UUID
 
     name: str
     category: str
@@ -100,5 +110,7 @@ class SkillResponse(BaseModel):
     is_featured: bool = False
     display_order: int = 0
 
-    class Config:
-        from_attributes = True
+    created_at: Optional[datetime] = None
+    updated_at: Optional[datetime] = None
+
+    model_config = {"from_attributes": True}

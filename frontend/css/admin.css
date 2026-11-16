@@ -41,8 +41,7 @@ a:hover{text-decoration:underline}
    SHELL — two-column layout: sidebar + main
    ===================================================================== */
 .shell{
-  display:grid;
-  grid-template-columns:240px 1fr;
+  display:block;               /* the sidebar is now a slide-in drawer (see HAMBURGER MENU) */
   min-height:100vh;
 }
 
@@ -137,7 +136,7 @@ a:hover{text-decoration:underline}
   font-size:.85rem;
   color:var(--muted);
 }
-.topbar .crumb{letter-spacing:.02em}
+.topbar .crumb{letter-spacing:.02em;margin-right:auto}
 .topbar .crumb b{color:var(--text);font-weight:600}
 
 /* Content wrapper */
@@ -483,7 +482,8 @@ dialog{
   padding:0;
   width:min(740px,94vw);
   max-height:92vh;
-  overflow:hidden;
+  max-height:92dvh;            /* phones: ignores the moving address bar */
+  overflow:hidden;             /* the dialog itself never scrolls; .dlg-body does */
 }
 
 /* Explicitly hidden when not open */
@@ -497,9 +497,22 @@ dialog[open]{
   flex-direction:column;
 }
 
+/* The <form> sits between <dialog> and the head/body/foot, so it must be a
+   flex column too, otherwise .dlg-body is never height-limited and can't scroll. */
+dialog form{
+  display:flex;
+  flex-direction:column;
+  flex:1 1 auto;
+  min-height:0;
+  max-height:inherit;
+}
+
 dialog::backdrop{
   background:rgba(0,0,0,.7);
 }
+
+/* Stop the page behind from scrolling while a form is open */
+body:has(dialog[open]){overflow:hidden}
 
 /* Header — fixed at top */
 .dlg-head{
@@ -535,6 +548,7 @@ dialog::backdrop{
   overflow-y:auto;
   padding:1.2rem 1.4rem;
   min-height:0;
+  overscroll-behavior:contain;  /* scrolling the form doesn't move the page */
 }
 
 /* Footer — fixed at bottom */
@@ -732,26 +746,6 @@ dialog::backdrop{
    RESPONSIVE
    ===================================================================== */
 @media (max-width:900px){
-  .shell{grid-template-columns:1fr}
-
-  .sidebar{
-    flex-direction:row;
-    overflow-x:auto;
-    padding:.7rem;
-    border-right:0;
-    border-bottom:1px solid var(--border);
-    gap:.3rem;
-  }
-  .sidebar .logo{padding:.4rem .6rem .4rem 0;flex-shrink:0}
-  .sidebar .logo span{display:none}
-  .sidebar .spacer{display:none}
-  .sidebar a,
-  .sidebar .linkbtn{
-    white-space:nowrap;
-    padding:.45rem .75rem;
-    font-size:.85rem;
-    width:auto;
-  }
   .topbar{padding:.7rem 1rem}
   .content{padding:1rem 1rem 2rem}
 }
@@ -893,4 +887,86 @@ dialog::backdrop{
 /* Error message inside the login form */
 #login-result .notice{
   margin:1rem 0 0;
+}
+
+/* =====================================================================
+   HAMBURGER MENU — the sidebar is a drawer on every screen size.
+   Behaviour lives in js/admin-nav.js (adds .nav-toggle and .nav-backdrop).
+   ===================================================================== */
+.sidebar{
+  position:fixed;
+  top:0;
+  bottom:0;
+  left:0;
+  width:260px;
+  max-width:85vw;
+  overflow-y:auto;
+  z-index:60;
+  transform:translateX(-102%);
+  visibility:hidden;                       /* keeps closed links out of the tab order */
+  transition:transform .3s cubic-bezier(.2,.8,.2,1), visibility 0s linear .3s;
+  box-shadow:none;
+}
+body.nav-open .sidebar{
+  transform:none;
+  visibility:visible;
+  transition:transform .3s cubic-bezier(.2,.8,.2,1), visibility 0s;
+  box-shadow:12px 0 40px rgba(0,0,0,.5);
+}
+
+.nav-backdrop{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  z-index:55;
+}
+.nav-backdrop[hidden]{display:none}
+body.nav-open{overflow:hidden}
+
+/* The button */
+.nav-toggle{
+  display:inline-grid;
+  place-items:center;
+  width:40px;
+  height:40px;
+  margin-right:.75rem;
+  padding:0;
+  border:1px solid var(--border);
+  border-radius:9px;
+  background:var(--card);
+  color:var(--text);
+  cursor:pointer;
+  flex:none;
+  transition:background .2s, border-color .2s;
+}
+.nav-toggle:hover{background:#18181c;border-color:var(--accent)}
+.nav-toggle:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.nav-toggle.floating{
+  position:fixed;
+  top:.75rem;
+  left:.75rem;
+  z-index:50;
+  margin:0;
+}
+
+/* Three bars that turn into an X while the menu is open */
+.nav-toggle .bars{position:relative;display:block;width:18px;height:14px}
+.nav-toggle .bars i{
+  position:absolute;
+  left:0;
+  width:100%;
+  height:2px;
+  border-radius:2px;
+  background:currentColor;
+  transition:transform .3s, opacity .2s, top .3s;
+}
+.nav-toggle .bars i:nth-child(1){top:0}
+.nav-toggle .bars i:nth-child(2){top:6px}
+.nav-toggle .bars i:nth-child(3){top:12px}
+body.nav-open .nav-toggle .bars i:nth-child(1){top:6px;transform:rotate(45deg)}
+body.nav-open .nav-toggle .bars i:nth-child(2){opacity:0}
+body.nav-open .nav-toggle .bars i:nth-child(3){top:6px;transform:rotate(-45deg)}
+
+@media (prefers-reduced-motion:reduce){
+  .sidebar,.nav-toggle .bars i{transition:none}
 }
