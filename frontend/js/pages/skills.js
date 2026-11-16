@@ -14,20 +14,20 @@
      Warped headline — reads word from data-word
      --------------------------------------------------------------------- */
   function initHeadline() {
-    const el = document.getElementById("word");
-    if (!el) return;
+    const headline = document.getElementById("word");
+    if (!headline) return;
 
-    const WORD = el.dataset.word || "SKILLS";
+    const WORD = headline.dataset.word || "SKILLS";
     const letters = [];
 
     ["ghost", "solid"].forEach(kind => {
-      const line = window.el("span", { class: "line " + kind, "aria-hidden": "true" });
+      const line = el("span", { class: "line " + kind, "aria-hidden": "true" });
       WORD.split("").forEach(ch => {
-        const s = window.el("span", { text: ch });
+        const s = el("span", { text: ch });
         line.append(s);
         letters.push({ s, ghost: kind === "ghost" });
       });
-      el.append(line);
+      headline.append(line);
     });
 
     const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -72,7 +72,7 @@
      Profile — role subtitle + footer
      --------------------------------------------------------------------- */
   function initProfile() {
-    window.getProfile().then(p => {
+    getProfile().then(p => {
       const role   = document.getElementById("role");
       const footer = document.getElementById("footer-name");
       const year   = document.getElementById("year");
@@ -114,25 +114,25 @@
         ? null
         : Math.min(100, Math.max(0, Math.round(Number(s.proficiency) || 0)));
 
-      return window.el("article", { class: "card skill reveal" },
-        window.el("div", { class: "skill-top" },
-          window.el("span", { class: "ico", text: badgeText(s), "aria-hidden": "true" }),
-          window.el("div", {},
-            window.el("h3", { text: s.name }),
-            s.is_learning && window.el("span", { class: "badge-red", text: "Learning" })
+      return el("article", { class: "card skill reveal" },
+        el("div", { class: "skill-top" },
+          el("span", { class: "ico", text: badgeText(s), "aria-hidden": "true" }),
+          el("div", {},
+            el("h3", { text: s.name }),
+            s.is_learning && el("span", { class: "badge-red", text: "Learning" })
           )
         ),
-        s.description && window.el("p", { class: "desc", text: s.description }),
-        pct !== null && window.el("div", { class: "meter-row" },
-          window.el("div", {
+        s.description && el("p", { class: "desc", text: s.description }),
+        pct !== null && el("div", { class: "meter-row" },
+          el("div", {
             class: "meter",
             role: "progressbar",
             "aria-valuemin": 0,
             "aria-valuemax": 100,
             "aria-valuenow": pct,
             "aria-label": s.name + " proficiency",
-          }, window.el("span", { class: "fill", style: "--p:" + pct + "%" })),
-          window.el("b", { text: pct + "%" })
+          }, el("span", { class: "fill", style: "--p:" + pct + "%" })),
+          el("b", { text: pct + "%" })
         )
       );
     }
@@ -142,6 +142,7 @@
       const cats = [...new Set(all.map(s => s.category).filter(Boolean))].sort();
       const hasLearning = all.some(s => s.is_learning);
 
+      if (!filtersBox) return;
       if (cats.length < 2 && !hasLearning) {
         filtersBox.replaceChildren();
         return;
@@ -151,7 +152,7 @@
 
       if (cats.length > 1) {
         pills.push(...["", ...cats].map(c =>
-          window.el("button", {
+          el("button", {
             class: "pill",
             type: "button",
             "aria-pressed": String(c === category),
@@ -167,7 +168,7 @@
 
       if (hasLearning) {
         pills.push(
-          window.el("button", {
+          el("button", {
             class: "pill solid",
             type: "button",
             "aria-pressed": String(learningOnly),
@@ -197,14 +198,14 @@
       );
 
       const cats = new Set(list.map(s => s.category)).size;
-      countEl.textContent =
+      if (countEl) countEl.textContent =
         list.length +
         (list.length === 1 ? " skill" : " skills") +
         (cats > 1 ? " · " + cats + " categories" : "");
 
       if (!list.length) {
         groupsBox.replaceChildren(
-          window.el("p", {
+          el("p", {
             class: "empty",
             text: all.length
               ? "No skills match this filter."
@@ -228,9 +229,9 @@
         ...Object.keys(groups)
           .sort((a, b) => order(a) - order(b) || a.localeCompare(b))
           .map(c =>
-            window.el("section", { class: "group" },
-              window.el("h2", { text: c }),
-              window.el("div", { class: "grid" },
+            el("section", { class: "group" },
+              el("h2", { text: c }),
+              el("div", { class: "grid" },
                 groups[c]
                   .sort((a, b) =>
                     (a.display_order ?? 0) - (b.display_order ?? 0) ||
@@ -242,7 +243,7 @@
           )
       );
 
-      window.initReveal(groupsBox);
+      initReveal(groupsBox);
     }
 
     /* Search input */
@@ -256,13 +257,13 @@
     /* Fetch */
     (async () => {
       try {
-        all = window.listOf(await window.api.get("/api/skills"), "skills");
+        all = listOf(await api.get("/api/skills"), "skills");
         renderFilters();
         render();
       } catch (e) {
-        countEl.textContent = "";
+        if (countEl) countEl.textContent = "";
         groupsBox.replaceChildren(
-          window.el("p", { class: "notice", text: e.message || "Could not load skills." })
+          el("p", { class: "notice", text: e.message || "Could not load skills." })
         );
       }
     })();
@@ -272,10 +273,9 @@
      Boot
      --------------------------------------------------------------------- */
   document.addEventListener("DOMContentLoaded", () => {
-    initHeadline();
-    initMenu();
-    initProfile();
-    initSkills();
-    window.initReveal();
+    [initSkills, initHeadline, initMenu, initProfile].forEach(fn => {
+      try { fn(); } catch (e) { console.error("[skills] " + fn.name + " failed:", e); }
+    });
+    try { initReveal(); } catch (e) { console.error("[skills] initReveal failed:", e); }
   });
 })();
