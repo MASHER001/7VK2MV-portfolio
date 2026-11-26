@@ -4,11 +4,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
-  <title>Achievements | Admin</title>
+  <title>Experiences | Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/admin.css">
   <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/admin-achievements.css">
 </head>
-<body data-admin>
+<body class="page-admin-experiences" data-admin>
   <div class="shell">
 
     <!-- ============ SIDEBAR ============ -->
@@ -21,7 +25,7 @@
       <a href="projects.html"><span class="cat-avatar" data-cat="projects"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5h6v2"/></svg></span>Projects</a>
       <a href="skills.html"><span class="cat-avatar" data-cat="skills"><svg class="i" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg></span>Skills</a>
       <a href="certificates.html"><span class="cat-avatar" data-cat="certificates"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M8.5 14L7 22l5-3 5 3-1.5-8"/></svg></span>Certificates</a>
-      <a href="achievements.html" class="active"><span class="cat-avatar" data-cat="achievements"><svg class="i" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg></span>Achievements</a>
+      <a href="achievements.html" class="active"><span class="cat-avatar" data-cat="achievements"><svg class="i" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg></span>Experiences</a>
       <a href="profile.html"><span class="cat-avatar" data-cat="profile"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></span>Profile</a>
       <div class="spacer"></div>
       <a href="../index.html"><span class="cat-avatar"><svg class="i" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v6H4V6h6"/></svg></span>View site</a>
@@ -30,24 +34,31 @@
 
     <!-- ============ MAIN ============ -->
     <div class="main">
-      <header class="topbar"><div class="crumb">Admin / <b>Achievements</b></div></header>
+      <header class="topbar"><div class="crumb">Admin / <b>Experiences</b></div></header>
 
       <main class="content">
         <div class="head">
-          <h1>Achievements</h1>
-          <button class="btn primary" id="newBtn" type="button">+ New achievement</button>
+          <div class="heading-copy">
+            <p class="page-kicker">Achievement manager</p>
+            <h1>Experiences</h1>
+            <p class="page-intro">Manage the milestones displayed on your public Experiences page.</p>
+          </div>
+          <div class="head-actions">
+            <a class="btn secondary" href="../achievements.html" target="_blank" rel="noopener noreferrer">Preview page</a>
+            <button class="btn primary" id="newBtn" type="button">+ Add experience</button>
+          </div>
         </div>
 
         <div id="page-error"></div>
 
         <div class="toolbar">
-          <input id="search" type="search" placeholder="Search achievements" aria-label="Search achievements">
+          <input id="search" type="search" placeholder="Search experiences" aria-label="Search experiences">
           <select id="catFilter" aria-label="Filter by category"><option value="">All categories</option></select>
         </div>
 
         <section class="card table-wrap">
-          <table>
-            <thead><tr><th>Achievement</th><th>Category</th><th>Date</th><th>Order</th><th></th></tr></thead>
+          <table aria-label="Experiences">
+            <thead><tr><th>Experience</th><th>Category</th><th>Date</th><th>Order</th><th>Actions</th></tr></thead>
             <tbody id="rows"><tr><td colspan="5" class="empty">Loading…</td></tr></tbody>
           </table>
         </section>
@@ -61,7 +72,7 @@
   <dialog id="dlg">
     <form id="aform" novalidate>
       <div class="dlg-head">
-        <h2 id="dlgTitle">New achievement</h2>
+        <h2 id="dlgTitle">New experience</h2>
         <button class="x" type="button" id="closeBtn" aria-label="Close">&times;</button>
       </div>
 
@@ -93,7 +104,7 @@
 
       <div class="dlg-foot">
         <button class="btn secondary" type="button" id="cancelBtn">Cancel</button>
-        <button class="btn primary" type="submit" id="saveBtn">Save achievement</button>
+        <button class="btn primary" type="submit" id="saveBtn">Save experience</button>
       </div>
     </form>
   </dialog>

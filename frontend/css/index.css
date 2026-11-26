@@ -353,3 +353,16 @@ body{
   .heart{animation:none}
   .fan-wrap .ring svg{animation:none}
 }
+
+/* Translucent finishes let the overlapping home cards read as glass. */
+.fcard{
+  border:1px solid rgba(255,255,255,.2);
+  -webkit-backdrop-filter:blur(12px) saturate(115%);
+  backdrop-filter:blur(12px) saturate(115%);
+}
+.fcard:not(.red):not(.light){background:rgba(16,21,29,.84)}
+.fcard.red{background:rgba(236,74,47,.88)}
+.fcard.light{
+  background:rgba(244,244,242,.88);
+  border-color:rgba(255,255,255,.72);
+}

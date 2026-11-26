@@ -6,29 +6,64 @@
   <meta name="robots" content="noindex">
   <title>Dashboard | Admin</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💼</text></svg>">
-  <link rel="stylesheet" href="../css/styles.css">
   <link rel="stylesheet" href="../css/admin.css">
   <link rel="stylesheet" href="../css/animations.css">
-  <link rel="stylesheet" href="../css/responsive.css">
+  <link rel="stylesheet" href="../css/admin-dashboard.css">
 </head>
-<body data-admin>
-  <div class="admin">
+<body class="admin-dashboard" data-admin>
+  <div class="shell">
     <aside class="sidebar">
-      <h2>Admin</h2>
-      <a href="dashboard.html">Dashboard</a>
-      <a href="messages.html">Messages</a>
-      <a href="projects.html">Projects</a>
-      <a href="skills.html">Skills</a>
-      <a href="certificates.html">Certificates</a>
-      <a href="profile.html">Profile</a>
-      <a href="../index.html">View site</a>
-      <a href="#" data-logout>Log out</a>
+      <div class="logo">
+        <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></svg><span>Portfolio</span>
+      </div>
+      <a href="dashboard.html" class="active" aria-current="page"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Dashboard</a>
+      <a href="messages.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>Messages</a>
+      <a href="projects.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5h6v2"/></svg>Projects</a>
+      <a href="skills.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>Skills</a>
+      <a href="certificates.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9" r="6"/><path d="M8.5 14L7 22l5-3 5 3-1.5-8"/></svg>Certificates</a>
+      <a href="achievements.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg>Experiences</a>
+      <a href="profile.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>Profile</a>
+      <div class="spacer"></div>
+      <a href="../index.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v6H4V6h6"/></svg>View site</a>
+      <button class="linkbtn" data-logout type="button"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4H4v16h5M16 8l4 4-4 4M20 12H9"/></svg>Log out</button>
     </aside>
 
-    <main class="admin-main">
-      <h1>Dashboard</h1>
-      <div id="stats" class="stats"></div>
-    </main>
+    <div class="main">
+      <header class="topbar"><div class="crumb">Admin / <b>Dashboard</b></div></header>
+      <main class="content dashboard-content">
+        <div class="head dashboard-head">
+          <div>
+            <p class="dashboard-kicker">Portfolio overview</p>
+            <h1>Dashboard</h1>
+            <p class="dashboard-intro">Your portfolio activity and content, all in one place.</p>
+          </div>
+          <a class="btn secondary" href="../index.html" target="_blank" rel="noopener noreferrer">View public site</a>
+        </div>
+
+        <div id="dashboard-error"></div>
+        <section id="stats" class="stats" aria-label="Portfolio statistics">
+          <p class="empty">Loading dashboard data…</p>
+        </section>
+
+        <section class="dashboard-links card" aria-labelledby="manage-heading">
+          <div class="dashboard-links-head">
+            <div>
+              <p class="dashboard-kicker">Quick navigation</p>
+              <h2 id="manage-heading">Manage your portfolio</h2>
+            </div>
+            <p>Choose a section to review or update its content.</p>
+          </div>
+          <nav class="quick-links" aria-label="Portfolio management">
+            <a class="quick-link" href="projects.html"><span>Projects</span><small>Manage your work</small><b aria-hidden="true">→</b></a>
+            <a class="quick-link" href="skills.html"><span>Skills</span><small>Update your expertise</small><b aria-hidden="true">→</b></a>
+            <a class="quick-link" href="certificates.html"><span>Certificates</span><small>Manage credentials</small><b aria-hidden="true">→</b></a>
+            <a class="quick-link" href="achievements.html"><span>Experiences</span><small>Post milestones</small><b aria-hidden="true">→</b></a>
+            <a class="quick-link" href="messages.html"><span>Messages</span><small>Open your inbox</small><b aria-hidden="true">→</b></a>
+            <a class="quick-link" href="profile.html"><span>Profile</span><small>Edit public details</small><b aria-hidden="true">→</b></a>
+          </nav>
+        </section>
+      </main>
+    </div>
   </div>
 
   <script src="../js/config.js"></script>

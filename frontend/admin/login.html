@@ -8,36 +8,49 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💼</text></svg>">
   <link rel="stylesheet" href="../css/admin.css">
   <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/admin-login.css">
 </head>
-<body>
-  <main class="login-wrap">
-    <form id="login-form" class="card login-card" novalidate>
-      <div class="logo">
-        <svg class="i" viewBox="0 0 24 24" style="width:30px;height:30px"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></svg><span>Portfolio</span>
-      </div>
-      <h1>Admin login</h1>
-      <p class="sub">Sign in to manage your portfolio.</p>
+<body class="admin-login">
+  <main class="auth-scene">
+    <section class="auth-wrapper" aria-label="Administrator sign in">
+      <div class="diagonal-bg" aria-hidden="true"></div>
 
-      <div class="field">
-        <label for="email">Email</label>
-        <div class="with-icon">
-          <svg class="i" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
-          <input id="email" name="email" type="email" required autocomplete="username" placeholder="you@example.com">
+      <section class="panel form-panel" aria-labelledby="login-title">
+        <form id="login-form" class="auth-form" novalidate>
+          <div class="auth-brand">
+            <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></svg>
+            <span>Portfolio</span>
+          </div>
+          <p class="auth-kicker">Administrator access</p>
+          <h1 id="login-title">Sign in</h1>
+          <p class="sub">Use your authorized account to manage your portfolio.</p>
+
+          <div class="input-group">
+            <input id="email" name="email" type="email" required autocomplete="username" placeholder=" ">
+            <label for="email">Email address</label>
+          </div>
+
+          <div class="input-group">
+            <input id="password" name="password" type="password" required autocomplete="current-password" placeholder=" ">
+            <label for="password">Password</label>
+            <button type="button" class="password-toggle" id="togglePw" aria-label="Show password">Show</button>
+          </div>
+
+          <button class="btn-submit" type="submit" id="submitBtn">Sign in</button>
+          <div id="login-result" role="alert" aria-live="polite"></div>
+          <a class="back" href="../index.html">&larr; Back to site</a>
+        </form>
+      </section>
+
+      <aside class="panel welcome-panel">
+        <div class="welcome-copy">
+          <p class="welcome-kicker">Your portfolio workspace</p>
+          <h2>Welcome back</h2>
+          <p>Manage your projects, skills, messages, and experiences from one place.</p>
         </div>
-      </div>
-
-      <div class="field">
-        <label for="password">Password</label>
-        <div class="pw">
-          <input id="password" name="password" type="password" required autocomplete="current-password">
-          <button type="button" id="togglePw" aria-label="Show password">Show</button>
-        </div>
-      </div>
-
-      <button class="btn primary" type="submit" id="submitBtn">Sign in</button>
-      <div id="login-result" role="alert"></div>
-      <a class="back" href="../index.html">&larr; Back to site</a>
-    </form>
+        <span class="welcome-mark" aria-hidden="true">V</span>
+      </aside>
+    </section>
   </main>
 
   <script src="../js/config.js"></script>

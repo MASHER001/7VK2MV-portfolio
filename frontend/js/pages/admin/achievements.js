@@ -1,4 +1,4 @@
-// Admin achievements: list, search/filter, create, edit, delete, image upload.
+// Admin experiences: list, search/filter, create, edit, delete, image upload.
 // The New/Edit form lives in a <template>. It is added to the page only while it is open
 // and removed again as soon as it is closed (Cancel, X, Esc, click outside, or after saving).
 const rowsBox = document.getElementById("rows");
@@ -52,7 +52,7 @@ function render() {
     (!cat || a.category === cat) &&
     (!q || [a.title, a.category, a.description].some(v => (v || "").toLowerCase().includes(q))));
   rowsBox.replaceChildren(...(list.length ? list.map(row) :
-    [el("tr", {}, el("td", { colspan: 5, class: "empty", text: items.length ? "No achievements match your filters." : "No achievements yet. Click “New achievement” to add one." }))]));
+    [el("tr", {}, el("td", { colspan: 5, class: "empty", text: items.length ? "No experiences match your filters." : "No experiences yet. Click “Add experience” to create one." }))]));
 }
 function row(a) {
   const img = safeUrl(a.image_url);
@@ -76,7 +76,7 @@ async function load() {
     fillCategories(); render();
   } catch (e) {
     document.getElementById("page-error").replaceChildren(el("p", { class: "notice err", text: e.message }));
-    rowsBox.replaceChildren(el("tr", {}, el("td", { colspan: 5, class: "empty", text: "Could not load achievements." })));
+    rowsBox.replaceChildren(el("tr", {}, el("td", { colspan: 5, class: "empty", text: "Could not load experiences." })));
   }
 }
 search.addEventListener("input", render);
@@ -113,7 +113,7 @@ function openForm(a) {
   if (dlg) return;
   editing = a || null;
   mountForm();
-  dlg.querySelector("#dlgTitle").textContent = a ? "Edit achievement" : "New achievement";
+  dlg.querySelector("#dlgTitle").textContent = a ? "Edit experience" : "New experience";
   FIELDS.forEach(([n, kind]) => {
     const i = form.elements[n], v = a ? a[n] : null;
     if (kind === "bool") i.checked = !!v; else i.value = v ?? "";
@@ -150,11 +150,11 @@ async function onSubmit(ev) {
   saveBtn.disabled = true;
   try {
     const payload = read();
-    if (wasEditing && !editing.id) throw new Error("This achievement has no id in the API response, so it can't be updated. The backend response schema must include id.");
+    if (wasEditing && !editing.id) throw new Error("This experience has no id in the API response, so it can't be updated. The backend response schema must include id.");
     if (wasEditing) await api.put("/api/achievements/" + editing.id, payload, true);
     else await api.post("/api/achievements", payload, true);
     closeForm();
-    toast(wasEditing ? "Achievement updated" : "Achievement created");
+    toast(wasEditing ? "Experience updated" : "Experience created");
     await load();
   } catch (e) {
     if (formError) formError.replaceChildren(el("p", { class: "notice err", text: e.message }));
@@ -164,9 +164,9 @@ async function onSubmit(ev) {
 document.getElementById("newBtn").addEventListener("click", () => openForm(null));
 
 async function remove(a) {
-  if (!a.id) { toast("This achievement has no id in the API response, so it can't be deleted.", true); return; }
+  if (!a.id) { toast("This experience has no id in the API response, so it can't be deleted.", true); return; }
   if (!confirm("Delete “" + a.title + "”? This cannot be undone.")) return;
-  try { await api.del("/api/achievements/" + a.id, true); toast("Achievement deleted"); await load(); }
+  try { await api.del("/api/achievements/" + a.id, true); toast("Experience deleted"); await load(); }
   catch (e) { toast(e.message, true); }
 }
 

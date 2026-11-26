@@ -1,6 +1,6 @@
 /* =====================================================================
-   animations.css - motion for the public pages (home, skills, ...)
-   Load after styles.css. Admin pages do not use these classes.
+   animations.css - shared motion for the public pages and admin components.
+   Load after the page's base stylesheet.
 
    Conventions
    - Effects that must stack (hover lift on top of an idle float, say) use

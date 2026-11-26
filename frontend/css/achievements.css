@@ -23,7 +23,10 @@
 /* ---------- card ---------- */
 .ach{
   padding:0;overflow:hidden;display:flex;flex-direction:column;
-  background:var(--card);border:1px solid var(--line);border-radius:var(--radius,18px);
+  background:rgba(255,255,255,.3);border:1px solid rgba(255,255,255,.62);border-radius:var(--radius,18px);
+  box-shadow:0 14px 34px rgba(0,0,0,.08);
+  -webkit-backdrop-filter:blur(16px);
+  backdrop-filter:blur(16px);
 }
 /* reveal, stagger and hover lift for .ach cards come from animations.css */
 /* beats the generic .card padding set in styles.css / responsive.css (the padding lives in .ach-body) */

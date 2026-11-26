@@ -1530,4 +1530,97 @@ h2{
   .lb .prev{left:.2rem}
   .lb .nxt{right:.2rem}
 }
+
+/* Frosted surfaces used throughout the public pages. */
+body:not([data-admin]) .card,
+body:not([data-admin]) .empty,
+body:not([data-admin]) .pager a{
+  background:rgba(255,255,255,.3);
+  border-color:rgba(255,255,255,.62);
+  box-shadow:0 14px 34px rgba(0,0,0,.08);
+  -webkit-backdrop-filter:blur(16px);
+  backdrop-filter:blur(16px);
+}
+body:not([data-admin]) .card.dark,
+body:not([data-admin]) .cta{
+  background:rgba(13,13,13,.82);
+  border-color:rgba(255,255,255,.14);
+  -webkit-backdrop-filter:blur(18px);
+  backdrop-filter:blur(18px);
+}
+body:not([data-admin]) .menu{
+  background:rgba(236,74,47,.88);
+  -webkit-backdrop-filter:blur(20px);
+  backdrop-filter:blur(20px);
+}
+body:not([data-admin]) .pill{
+  background:rgba(255,255,255,.2);
+  -webkit-backdrop-filter:blur(10px);
+  backdrop-filter:blur(10px);
+}
+body:not([data-admin]) .pill.solid{
+  background:rgba(236,74,47,.86);
+}
+body:not([data-admin]) .pill[aria-pressed="true"]{
+  border-color:var(--ink);
+  background:var(--ink);
+  color:var(--bg);
+}
+body:not([data-admin]) .pill:hover,
+body:not([data-admin]) .pill.solid:hover{
+  background:var(--ink);
+}
+body:not([data-admin]) .shot{
+  border:1px solid rgba(255,255,255,.62);
+  background:rgba(255,255,255,.3);
+  box-shadow:0 14px 34px rgba(0,0,0,.08);
+  -webkit-backdrop-filter:blur(16px);
+  backdrop-filter:blur(16px);
+}
+body:not([data-admin]) .cert,
+body:not([data-admin]) .proj{
+  border-color:rgba(255,255,255,.62);
+  background:rgba(255,255,255,.3);
+  box-shadow:0 14px 34px rgba(0,0,0,.08);
+  -webkit-backdrop-filter:blur(16px);
+  backdrop-filter:blur(16px);
+}
+body:not([data-admin]) .controls input,
+body:not([data-admin]) .controls select,
+body:not([data-admin]) .skills-controls input,
+body:not([data-admin]) .skills-controls select,
+body:not([data-admin]) #contact-form input,
+body:not([data-admin]) #contact-form textarea{
+  background:rgba(255,255,255,.42);
+  -webkit-backdrop-filter:blur(12px);
+  backdrop-filter:blur(12px);
+}
+body:not([data-admin]) .page-about #content,
+body:not([data-admin]) .page-about #content .grid,
+body:not([data-admin]) .page-about #content .stack,
+body:not([data-admin]) .page-about #content .card,
+body:not([data-admin]) .page-about .facts{
+  min-width:0;
+}
+.page-about .name,
+.page-about .role,
+.page-about .bio,
+.page-about .avail-msg,
+.page-about .fact span{
+  max-width:100%;
+  overflow-wrap:anywhere;
+}
+.page-about .bio,
+.page-about .avail-msg{
+  line-height:1.7;
+}
+.page-about .fact{
+  display:grid;
+  grid-template-columns:minmax(5.5rem,.4fr) minmax(0,1fr);
+  align-items:start;
+}
+.page-about .fact span:last-child{
+  min-width:0;
+  text-align:right;
+}
 }
