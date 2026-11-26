@@ -160,11 +160,13 @@
     function validate() {
       const v = n => form.elements[n].value.trim();
       const errs = {
-        name:    !v("name")    ? "Please enter your name."      : "",
+        name:    !v("name")    ? "Please enter your name."      :
+                 v("name").length < 2 ? "Your name must be at least 2 characters." : "",
         email:   !v("email")   ? "Please enter your email."     :
                  !EMAIL_RE.test(v("email")) ? "That email doesn't look right." : "",
-        subject: v("subject").length > 200  ? "Keep the subject under 200 characters." : "",
+        subject: v("subject").length > 150  ? "Keep the subject under 150 characters." : "",
         message: !v("message") ? "Please write a message."      :
+                 v("message").length < 10 ? "Your message must be at least 10 characters." :
                  v("message").length > 5000 ? "That's over 5000 characters." : "",
       };
       Object.entries(errs).forEach(([n, m]) => fieldErr(n, m));
@@ -215,6 +217,7 @@
           name:    form.elements.name.value.trim(),
           email:   form.email.value.trim(),
           message: form.message.value.trim(),
+          website: form.website.value.trim(),
         };
         const subj = form.subject.value.trim();
         if (subj) body.subject = subj;

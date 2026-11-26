@@ -18,7 +18,7 @@ def _send_email(to, subject, html):
     """
 
     api_key = os.getenv("RESEND_API_KEY")
-    from_email = os.getenv("RESEND_FROM_EMAIL")
+    from_email = os.getenv("RESEND_FROM_EMAIL") or os.getenv("EMAIL_FROM")
 
     if not api_key or not from_email:
         logger.warning("Resend email configuration is missing.")
@@ -61,7 +61,7 @@ def _send_email(to, subject, html):
 def send_contact_notification(message):
     """Notify the portfolio owner about a new contact submission."""
 
-    recipient = os.getenv("CONTACT_NOTIFICATION_EMAIL")
+    recipient = os.getenv("CONTACT_NOTIFICATION_EMAIL") or os.getenv("NOTIFY_EMAIL")
 
     if not recipient:
         logger.warning("CONTACT_NOTIFICATION_EMAIL is not configured.")
@@ -90,6 +90,11 @@ def send_contact_notification(message):
 
 def send_auto_reply(message):
     """Send an acknowledgement to the person who submitted the form."""
+
+    auto_reply = os.getenv("AUTO_REPLY", "true").strip().lower()
+    if auto_reply not in {"1", "true", "yes", "on"}:
+        logger.info("Resend auto-reply is disabled.")
+        return False
 
     recipient = message.get("email")
 

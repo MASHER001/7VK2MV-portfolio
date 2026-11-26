@@ -9,6 +9,7 @@ Endpoints:
     PATCH  /api/contact/messages/{id}      → admin, update flags
     DELETE /api/contact/messages/{id}      → admin, delete
 """
+import logging
 from typing import List, Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Request, status
@@ -25,6 +26,7 @@ from app.services import email_service
 from app.services.contact_service import ContactService
 
 router = APIRouter(prefix="/api/contact", tags=["Contact"])
+logger = logging.getLogger(__name__)
 
 
 # Rate limit: max 3 submissions per hour per IP
@@ -101,8 +103,8 @@ async def submit_contact(
     try:
         await run_in_threadpool(email_service.send_contact_notification, msg)
         await run_in_threadpool(email_service.send_auto_reply, msg)
-    except Exception:  # defensive: never let email break the contact form
-        pass
+    except Exception:
+        logger.exception("Contact message was saved, but email delivery failed.")
 
     return ContactSubmitResponse()
 

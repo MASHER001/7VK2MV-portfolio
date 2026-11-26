@@ -18,13 +18,15 @@ async function request(method, path, body, auth) {
 
   if (!res.ok) {
     const d = data && data.detail;
-    throw new Error(
+    const error = new Error(
       typeof d === "string"
         ? d
         : Array.isArray(d)
           ? d.map(x => x.msg).join("; ")
           : "Request failed (" + res.status + ")"
     );
+    error.status = res.status;
+    throw error;
   }
   return data;
 }

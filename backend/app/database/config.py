@@ -18,7 +18,7 @@ class Settings(BaseSettings):
     """
 
     supabase_url: str
-    supabase_service_role_key: str
+    supabase_secret_key: str
     app_env: str = "development"
     frontend_url: str = "http://localhost:5500"
 

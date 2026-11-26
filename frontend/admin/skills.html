@@ -69,8 +69,11 @@
         <div class="g2">
           <div class="field"><label for="name">Name *</label><input id="name" name="name" required maxlength="80" placeholder="Python"></div>
           <div class="field"><label for="category">Category *</label>
-            <input id="category" name="category" required maxlength="80" list="cats" placeholder="Programming">
-            <datalist id="cats"><option value="Programming"><option value="Frontend"><option value="Backend"><option value="Database"><option value="Development Tools"><option value="Design"><option value="Currently Learning"></datalist>
+            <select id="category" name="category" required>
+              <option value="">Choose a category</option>
+              <option>Programming</option><option>Frontend</option><option>Backend</option><option>Database</option>
+              <option>Cybersecurity</option><option>Development Tools</option><option>Design</option><option>Currently Learning</option>
+            </select>
           </div>
 
           <div class="field full"><label for="description">Description</label><textarea id="description" name="description" maxlength="500"></textarea></div>

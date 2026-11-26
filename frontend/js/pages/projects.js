@@ -5,7 +5,7 @@ const sortEl = document.getElementById("sort");
 const catBox = document.getElementById("catFilters");
 const statusBox = document.getElementById("statusFilters");
 const countEl = document.getElementById("count");
-const STATUS_ORDER = ["In Progress", "Completed", "Coming Soon", "Maintenance", "Archived"];
+const STATUS_ORDER = ["Planned", "In Progress", "Coming Soon", "Completed", "Maintenance", "Archived"];
 const SORTS = ["default", "newest", "az"];
 
 let all = [];
@@ -100,7 +100,12 @@ function pills(box, values, current, label, onPick) {
 }
 function renderFilters() {
   const cats = [...new Set(all.map(p => p.category).filter(Boolean))].sort();
-  const statuses = STATUS_ORDER.filter(s => all.some(p => p.status === s));
+  const statuses = [...new Set(all.map(p => p.status).filter(Boolean))].sort((a, b) => {
+    const aOrder = STATUS_ORDER.indexOf(a);
+    const bOrder = STATUS_ORDER.indexOf(b);
+    return (aOrder < 0 ? STATUS_ORDER.length : aOrder) -
+      (bOrder < 0 ? STATUS_ORDER.length : bOrder) || a.localeCompare(b);
+  });
   pills(catBox, cats, state.cat, "All categories", v => { state.cat = v; update(); });
   pills(statusBox, statuses, state.status, "Any status", v => { state.status = v; update(); });
 }

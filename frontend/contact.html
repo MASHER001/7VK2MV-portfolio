@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
-<link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/animations.css">
   <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body class="page-contact">
@@ -47,7 +47,7 @@
           <div class="two">
             <div class="field">
               <label for="name">Name</label>
-              <input id="name" name="name" autocomplete="name" maxlength="100" required>
+              <input id="name" name="name" autocomplete="name" minlength="2" maxlength="100" required>
               <p class="err" id="err-name"></p>
             </div>
             <div class="field">
@@ -59,13 +59,13 @@
 
           <div class="field">
             <label for="subject">Subject <span style="opacity:.6">(optional)</span></label>
-            <input id="subject" name="subject" maxlength="200">
+            <input id="subject" name="subject" maxlength="150">
             <p class="err" id="err-subject"></p>
           </div>
 
           <div class="field">
             <label for="message">Message</label>
-            <textarea id="message" name="message" maxlength="5000" required></textarea>
+            <textarea id="message" name="message" minlength="10" maxlength="5000" required></textarea>
             <div class="hint">
               <span class="err" id="err-message"></span>
               <span id="counter">0 / 5000</span>

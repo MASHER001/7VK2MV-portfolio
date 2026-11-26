@@ -159,7 +159,7 @@ form.addEventListener("submit", async ev => {
     } else if (status === 401) {
       renderError(
         "Session rejected by backend",
-        "The backend couldn't verify your token. Check SUPABASE_SERVICE_ROLE_KEY in .env and restart the server."
+        "The backend couldn't verify your token. Check SUPABASE_SECRET_KEY in .env and restart the server."
       );
     } else if (status === 404) {
       renderError(

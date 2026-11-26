@@ -27,7 +27,7 @@ class ContactCreate(BaseModel):
     # Bots fill every field they see. If this is non-empty, reject.
     website: Optional[str] = Field(None, max_length=200)
 
-    @field_validator("name", "subject", "message")
+    @field_validator("name", "subject", "message", mode="before")
     @classmethod
     def strip_whitespace(cls, v: Optional[str]) -> Optional[str]:
         return v.strip() if isinstance(v, str) else v

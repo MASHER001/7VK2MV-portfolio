@@ -110,10 +110,21 @@ class ProjectCard(BaseModel):
     github_url: Optional[str] = None
     live_url: Optional[str] = None
     featured_image_url: Optional[str] = None
+    start_date: Optional[date] = None
+    completion_date: Optional[date] = None
     is_featured: bool = False
+    display_order: int = 0
+    created_at: Optional[datetime] = None
 
     class Config:
         from_attributes = True
+
+
+class ProjectScreenshot(BaseModel):
+    title: Optional[str] = None
+    description: Optional[str] = None
+    image_url: Optional[str] = None
+    display_order: int = 0
 
 
 # ---------- Response (public, detail view) ----------
@@ -126,8 +137,7 @@ class ProjectDetail(ProjectCard):
     description: Optional[str] = None
     problem: Optional[str] = None
     solution: Optional[str] = None
-    start_date: Optional[date] = None
-    completion_date: Optional[date] = None
+    screenshots: List[ProjectScreenshot] = Field(default_factory=list)
 
     class Config:
         from_attributes = True
