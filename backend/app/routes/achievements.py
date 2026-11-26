@@ -1,4 +1,4 @@
-"""
+﻿"""
 Routes: Achievements
 Location: backend/app/routes/achievements.py
 
@@ -16,7 +16,7 @@ from app.schemas.achievement import (
     AchievementResponse,
     AchievementUpdate,
 )
-from app.services import achievement_service as service
+from app.services import achievements as service
 
 router = APIRouter(prefix="/api/achievements", tags=["Achievements"])
 
