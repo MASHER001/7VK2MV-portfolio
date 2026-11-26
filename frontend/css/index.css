@@ -69,33 +69,6 @@ body{
 .menu-wrap:focus-within .menu-tip,
 .menu-tip.show{opacity:1;transform:translateY(-50%) scale(1)}
 
-.page-home .menu-btn{
-  display:grid;
-  width:44px;
-  height:44px;
-  place-items:center;
-  padding:9px;
-  border:1px solid rgba(255,255,255,.72);
-  border-radius:14px;
-  background:rgba(255,255,255,.42);
-  color:var(--ink);
-  box-shadow:0 10px 24px rgba(0,0,0,.12);
-  -webkit-backdrop-filter:blur(14px);
-  backdrop-filter:blur(14px);
-  transition:transform .2s,background .2s,border-color .2s,box-shadow .2s;
-}
-.page-home .menu-btn:hover{
-  transform:translateY(-2px);
-  border-color:rgba(236,74,47,.62);
-  background:rgba(236,74,47,.88);
-  box-shadow:0 14px 28px rgba(0,0,0,.16);
-}
-.page-home .menu-btn:focus-visible{
-  outline:3px solid var(--red);
-  outline-offset:3px;
-}
-.page-home .menu-btn svg{width:100%;height:100%;stroke:currentColor}
-
 /* ---------------------------------------------------------------------
    FAN WRAPPER — holds ring + arrows + stage together
    --------------------------------------------------------------------- */

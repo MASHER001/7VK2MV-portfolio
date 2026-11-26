@@ -108,6 +108,37 @@ button{font:inherit;color:inherit;cursor:pointer}
 .menu-btn:hover{transform:rotate(90deg)}
 .menu-btn svg{width:100%;height:100%}
 
+body:not([data-admin]) .menu-btn{
+  display:grid;
+  width:44px;
+  height:44px;
+  place-items:center;
+  padding:9px;
+  border:1px solid rgba(255,255,255,.72);
+  border-radius:14px;
+  background:rgba(255,255,255,.42);
+  color:var(--ink);
+  box-shadow:0 10px 24px rgba(0,0,0,.12);
+  -webkit-backdrop-filter:blur(14px);
+  backdrop-filter:blur(14px);
+  transition:transform .2s,background .2s,border-color .2s,box-shadow .2s;
+}
+body:not([data-admin]) .menu-btn:hover{
+  transform:translateY(-2px);
+  border-color:rgba(236,74,47,.62);
+  background:rgba(236,74,47,.88);
+  box-shadow:0 14px 28px rgba(0,0,0,.16);
+}
+body:not([data-admin]) .menu-btn:focus-visible{
+  outline:3px solid var(--red);
+  outline-offset:3px;
+}
+body:not([data-admin]) .menu-btn svg{
+  width:100%;
+  height:100%;
+  stroke:currentColor;
+}
+
 /* ---------------------------------------------------------------------
    META LINE (name / role display)
    --------------------------------------------------------------------- */

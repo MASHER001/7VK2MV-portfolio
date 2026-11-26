@@ -48,12 +48,11 @@
 :is(.grid,.stack,.shots,.ach-list)>.reveal:nth-child(n+5){--d:.28s}
 
 /* ---------- hover feedback (mouse / trackpad only) ---------- */
-.menu-btn{transition:rotate .5s var(--ease)}
 .pill{transition:background .25s,color .25s,border-color .25s,translate .25s var(--ease),scale .15s}
 .pill:active{scale:.97}
 .menu .close{transition:rotate .4s var(--ease)}
 @media (hover:hover){
-  .menu-btn:hover,.menu .close:hover{rotate:90deg}
+  .menu .close:hover{rotate:90deg}
   .pill:hover{translate:0 -2px}
   .card.reveal.visible:hover,.proj.reveal.visible:hover,.cert.reveal.visible:hover,.shot.reveal.visible:hover,.ach.reveal.visible:hover{
     translate:0 -6px;scale:1.012;box-shadow:0 18px 38px rgba(0,0,0,.2)}

@@ -146,7 +146,7 @@
    ===================================================================== */
 @media (min-width:1200px){
   .page-about .grid{
-    grid-template-columns:minmax(0,330px) minmax(0,1fr);
+    grid-template-columns:minmax(0,1fr);
   }
 }
 
@@ -222,7 +222,7 @@
 }
 
 .page-about .stack{
-  grid-template-columns:repeat(auto-fit,minmax(min(100%,285px),1fr));
+  grid-template-columns:1fr;
   gap:1rem;
 }
 .page-about .about-card{
@@ -230,6 +230,54 @@
 }
 .page-about .about-intro{
   grid-column:1/-1;
+}
+
+.page-about .titlebox{
+  padding:2rem 0;
+}
+.page-about .titlebox .word{
+  font-size:clamp(2.2rem,11vw,3rem);
+}
+.page-about .titlebox .slab{
+  width:64px;
+}
+
+@media (min-width:601px){
+  .page-about #content,
+  .page-about .cta,
+  .page-about .page > .meta{
+    max-width:680px;
+    margin-inline:auto;
+  }
+  .page-about .photo{
+    width:100%;
+    height:auto;
+    aspect-ratio:4/3;
+    max-height:320px;
+  }
+}
+
+@media (min-width:861px){
+  .page-about #content .grid{
+    grid-template-columns:minmax(0,1fr);
+    gap:1rem;
+    margin-top:1.2rem;
+  }
+}
+
+.has-back .top .label{
+  padding-left:6rem;
+}
+
+.page-skills .skills-hero,
+.page-achievements .skills-hero{
+  position:relative;
+}
+.page-skills .skills-hero > .menu-btn,
+.page-achievements .skills-hero > .menu-btn{
+  position:absolute;
+  top:.6rem;
+  right:0;
 }
 
 /* =====================================================================
