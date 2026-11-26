@@ -9,17 +9,19 @@ const I = {
   bolt: '<svg viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>',
   work: '<svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5h6v2M3 13h18"/></svg>',
   award: '<svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M8.5 14L7 22l5-3 5 3-1.5-8"/></svg>',
+  trophy: '<svg viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg>',
   mail: '<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>',
 };
 
-/* one card per page, in the same order as the site menu (the red hub card opens the menu) */
+/* card order: About, Experiences, Projects, Skills, Certificates, then the rest (Contact, and the red hub card that opens the menu) */
 const PAGES = [
-  { key: "hub", title: "Portfolio", cap: "Explore the site", icon: LOGO, cls: "red", logo: true },
   { key: "about", title: "About", cap: "Who I am", href: "about.html", icon: I.user, cls: "light" },
-  { key: "skills", title: "Skills", cap: "What I work with", href: "skills.html", icon: I.bolt, bg: "#10151d" },
+  { key: "experiences", title: "Experiences", cap: "Wins & milestones", href: "achievements.html", icon: I.trophy, bg: "#3b1f4a" },
   { key: "projects", title: "Projects", cap: "Selected work", href: "projects.html", icon: I.work, bg: "#1e2f4d" },
+  { key: "skills", title: "Skills", cap: "What I work with", href: "skills.html", icon: I.bolt, bg: "#10151d" },
   { key: "certificates", title: "Certificates", cap: "Proof of learning", href: "certificates.html", icon: I.award, bg: "#0f3b32" },
   { key: "contact", title: "Contact", cap: "Say hello", href: "contact.html", icon: I.mail, cls: "light" },
+   
 ];
 let nodes = [], caps = {}, active = 0;
 
@@ -108,5 +110,5 @@ getProfile().then(p => {
   if (p.professional_title) caps.about.textContent = p.professional_title;
   if (p.availability_status) caps.contact.textContent = p.availability_status;
 }).catch(() => {});
-[["skills", "/api/skills", "skills", "skill"], ["projects", "/api/projects", "projects", "project"], ["certificates", "/api/certificates", "certificates", "certificate"]]
+[["skills", "/api/skills", "skills", "skill"], ["projects", "/api/projects", "projects", "project"], ["certificates", "/api/certificates", "certificates", "certificate"], ["experiences", "/api/achievements", "achievements", "achievement"]]
   .forEach(([key, path, k, noun]) => api.get(path).then(d => { caps[key].textContent = plural(listOf(d, k).length, noun); }).catch(() => {}));

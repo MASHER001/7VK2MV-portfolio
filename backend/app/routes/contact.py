@@ -3,16 +3,16 @@ Route: Contact
 Location: backend/app/routes/contact.py
 
 Endpoints:
-    POST   /api/contact                    → public, submit a message
+    POST   /api/contact                    → public, submit a message (also emails the owner via Resend)
     GET    /api/contact/messages           → admin, inbox list
     GET    /api/contact/messages/{id}      → admin, single message
     PATCH  /api/contact/messages/{id}      → admin, update flags
     DELETE /api/contact/messages/{id}      → admin, delete
 """
-
 from typing import List, Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Request, status
+from fastapi.concurrency import run_in_threadpool
 
 from app.dependencies import get_supabase, get_current_admin
 from app.schemas.contact import (
@@ -21,6 +21,7 @@ from app.schemas.contact import (
     MessageResponse,
     MessageUpdate,
 )
+from app.services import email_service
 from app.services.contact_service import ContactService
 
 router = APIRouter(prefix="/api/contact", tags=["Contact"])
@@ -86,6 +87,22 @@ async def submit_contact(
     # 3. Store
     user_agent = request.headers.get("user-agent")
     await service.submit_message(payload, ip_address=ip, user_agent=user_agent)
+
+    # 4. Email (Resend). The message is already saved, so an email problem must
+    # never fail the request: the functions below only log and return True/False.
+    # They are blocking HTTP calls, so run them in a worker thread, and wait for
+    # them here (on Vercel the function can be frozen once the response is sent).
+    msg = {
+        "name": payload.name,
+        "email": str(payload.email),
+        "subject": payload.subject,
+        "message": payload.message,
+    }
+    try:
+        await run_in_threadpool(email_service.send_contact_notification, msg)
+        await run_in_threadpool(email_service.send_auto_reply, msg)
+    except Exception:  # defensive: never let email break the contact form
+        pass
 
     return ContactSubmitResponse()
 
@@ -166,3 +183,4 @@ async def delete_message(
             detail="Message not found",
         )
     return None
+    

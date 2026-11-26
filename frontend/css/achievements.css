@@ -1,0 +1,45 @@
+/* =====================================================================
+   achievements.css — public Experiences page (achievements.html).
+   Uses the shared tokens from styles.css (--bg --ink --red --card --line).
+   Loaded after styles.css + animations.css, before responsive.css.
+   ===================================================================== */
+
+/* Fallback page frame in case .skills-page isn't defined in styles.css */
+.ach-page{position:relative;max-width:1180px;margin:0 auto;padding:1.4rem 1.2rem 3rem}
+
+/* 11-letter headline: smaller than the shared .word size so it never overflows */
+.page-achievements .word{font-size:clamp(1.5rem,7.6vw,6.2rem)}
+
+/* ---------- year groups ---------- */
+.ach-groups{display:flex;flex-direction:column;gap:2.4rem;margin-top:.4rem}
+.ach-year{display:grid;grid-template-columns:minmax(70px,110px) 1fr;gap:1.4rem;align-items:start}
+.ach-year > h2{
+  position:sticky;top:1rem;margin:0;
+  font-size:clamp(1.2rem,3.4vw,2.2rem);font-weight:800;letter-spacing:-.02em;line-height:1;
+  padding-top:.2rem;border-top:3px solid var(--red);
+}
+.ach-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(285px,1fr));gap:1.4rem}
+
+/* ---------- card ---------- */
+.ach{
+  padding:0;overflow:hidden;display:flex;flex-direction:column;
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius,18px);
+}
+/* reveal, stagger and hover lift for .ach cards come from animations.css */
+/* beats the generic .card padding set in styles.css / responsive.css (the padding lives in .ach-body) */
+.card.ach{padding:0}
+.ach-img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;background:var(--red)}
+.ach-body{display:flex;flex-direction:column;gap:.6rem;padding:1.2rem 1.3rem 1.4rem;flex:1}
+.ach-meta{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem}
+.ach h3{margin:0;font-size:1rem;line-height:1.3}
+.ach .desc{margin:0;font-family:var(--sans,system-ui,sans-serif);font-size:.92rem;line-height:1.55;color:#333}
+.ach .pill{align-self:flex-start;margin-top:auto}
+.ach-star{background:var(--ink);color:#fff}
+
+.page-achievements .skills-controls input[type="search"]{max-width:340px}
+
+/* ---------- small screens: year heading goes above the cards ---------- */
+@media (max-width:700px){
+  .ach-year{grid-template-columns:1fr;gap:.9rem}
+  .ach-year > h2{position:static;border-top-width:2px;padding-top:.5rem;font-size:1.3rem}
+}

@@ -70,9 +70,20 @@ function syncUrl() {
 function card(p) {
   const img = safeUrl(p.featured_image_url), live = safeUrl(p.live_url), code = safeUrl(p.github_url);
   const techs = p.technologies || [];
+  // Real <img> (not a CSS background): it sizes itself, so it can't collapse to 0 height if the
+  // stylesheet changes, and if the file fails to load the initials show instead of a blank tile.
+  const mono = el("span", { class: "mono", text: initials(p.title) });
+  let media = mono;
+  if (img) {
+    media = el("img", {
+      class: "zoom", src: img, alt: "", loading: "lazy", decoding: "async", referrerpolicy: "no-referrer",
+      style: "position:absolute;inset:0;width:100%;height:100%;object-fit:cover",
+    });
+    media.addEventListener("error", () => media.replaceWith(mono));
+  }
   const thumb = el("div", { class: "thumb" },
     p.is_featured && el("span", { class: "flag", text: "Featured" }),
-    img ? el("div", { class: "zoom", style: 'background-image:url("' + img + '")' }) : el("span", { class: "mono", text: initials(p.title) }));
+    media);
   return el("article", { class: "proj reveal" }, thumb,
     el("div", { class: "body" },
       el("div", { class: "row" }, el("span", { class: "cat", text: p.category || "Project" }), p.status && el("span", { class: "badge", text: p.status })),

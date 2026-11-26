@@ -309,3 +309,81 @@
     font-size:.85rem;
   }
 }
+/* =====================================================================
+   PHONE-FIRST POLISH — makes every public page feel built for the phone
+   at any width (320px small phones up to large tablets), without
+   changing the desktop look. Everything here is additive.
+   ===================================================================== */
+
+/* ---------- never scroll sideways; text never gets zoomed by the browser ---------- */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body.site{overflow-x:hidden}
+img,video{max-width:100%}
+/* long emails, links and unbroken words wrap instead of pushing the page wider */
+.card,.desc,.body,h1,h2,h3,p,.chip,.tag{overflow-wrap:anywhere}
+
+/* ---------- phones: comfortable reading + safe areas ---------- */
+@media (max-width:600px){
+  .label{font-size:.62rem;letter-spacing:.1em}                 /* the tiny caps labels were hard to read */
+  .page{padding-bottom:calc(2.5rem + env(safe-area-inset-bottom,0px))}
+
+  /* iOS zooms the page when a field's text is under 16px: keep fields at 16px */
+  body :is(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),select,textarea){font-size:16px!important}
+
+  /* fields and submit buttons are easy to hit and easy to type in */
+  body :is(input:not([type="checkbox"]):not([type="radio"]),select){min-height:46px}
+  form :is(button[type="submit"],.btn,.pill.solid){min-height:48px;width:100%;justify-content:center}
+
+  /* the footer stacks and centres instead of squeezing three columns */
+  .site-footer{display:flex;flex-direction:column;align-items:center;gap:.7rem;text-align:center;
+    padding:1.6rem 1rem calc(1.6rem + env(safe-area-inset-bottom,0px))}
+  .site-footer .footer-left,.site-footer .footer-center,.site-footer .footer-right{width:100%;display:flex;justify-content:center}
+  .site-footer p{margin:0}
+
+  /* back button clears the notch and doesn't cover the headline */
+  .back-btn{top:calc(.6rem + env(safe-area-inset-top,0px));left:calc(.6rem + env(safe-area-inset-left,0px))}
+
+  /* full-screen menu: big, thumb-friendly links that scroll if the phone is short */
+  .menu{overflow-y:auto;padding:4.5rem 1.6rem calc(2rem + env(safe-area-inset-bottom,0px));justify-content:flex-start}
+  .menu a{font-size:clamp(1.7rem,9vw,2.6rem);padding:.15rem 0}
+  .menu .close{top:calc(1rem + env(safe-area-inset-top,0px));right:1rem;width:46px;height:46px;font-size:2.2rem}
+
+  /* image viewers and dialogs fill the screen */
+  dialog:not(.keep-size){max-width:100vw;max-height:100dvh}
+
+  /* ---------- Experiences page ---------- */
+  .page-achievements .skills-hero .word{font-size:clamp(1.15rem,7.7vw,2rem)}   /* 11 letters: smaller than the other headlines */
+  .page-achievements .skills-controls input[type="search"]{max-width:none;width:100%}
+  .ach-groups{gap:1.8rem}
+  .ach-list{grid-template-columns:1fr;gap:1rem}
+  .ach-body{padding:1rem 1.05rem 1.15rem}
+  .ach .pill{width:100%;justify-content:center;text-align:center}
+}
+
+/* ---------- small tablets / big phones in landscape ---------- */
+@media (min-width:601px) and (max-width:860px){
+  .page-achievements .skills-hero .word{font-size:clamp(1.8rem,8vw,3.6rem)}
+  .ach-list{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+}
+
+/* ---------- very small phones (320px) ---------- */
+@media (max-width:360px){
+  :root{--gutter:.8rem}
+  .page-achievements .skills-hero .word{font-size:1.05rem}
+  .pill{padding:.5rem .75rem}
+  .menu a{font-size:1.6rem}
+}
+
+/* ---------- touch screens: every control is a comfortable target ---------- */
+@media (pointer:coarse){
+  .back-btn,.admin-link,.filters .pill,.pill{min-height:44px}
+  .back-btn{display:inline-flex;align-items:center}
+  a,button{-webkit-tap-highlight-color:rgba(236,74,47,.18)}
+  button,.pill,.back-btn{touch-action:manipulation}               /* no double-tap zoom delay */
+}
+
+/* ---------- notched phones in landscape ---------- */
+@media (orientation:landscape) and (max-height:520px){
+  .site-footer{padding-bottom:calc(1rem + env(safe-area-inset-bottom,0px))}
+  .page-achievements .skills-hero .word{font-size:clamp(1.4rem,6vh,2.4rem)}
+}

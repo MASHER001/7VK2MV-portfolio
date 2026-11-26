@@ -1,60 +1,105 @@
 /* =====================================================================
-   animations.css — shared @keyframes
+   animations.css - motion for the public pages (home, skills, ...)
+   Load after styles.css. Admin pages do not use these classes.
+
+   Conventions
+   - Effects that must stack (hover lift on top of an idle float, say) use
+     the individual transform properties: translate, rotate, scale.
+     They compose with each other and with each page's own `transform`,
+     so nothing needs !important.
+   - Hover effects only run on devices that can really hover.
+   - Everything stops for visitors who prefer reduced motion (last block).
    ===================================================================== */
+:root{--ease:cubic-bezier(.2,.8,.2,1);--spring:cubic-bezier(.34,1.56,.64,1)}
 
-/* Headline slab grows from the top */
-@keyframes slab{
-  from{transform:translateX(-50%) scaleY(0);transform-origin:top}
-  to  {transform:translateX(-50%) scaleY(1)}
+/* ---------- keyframes ---------- */
+@keyframes slab   {from{transform:translateX(-50%) scaleY(0);transform-origin:top}to{transform:translateX(-50%) scaleY(1)}}
+@keyframes fadeIn {from{opacity:0}to{opacity:1}}
+@keyframes fadeUp {from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes zoomIn {from{opacity:0;transform:scale(.92)}to{opacity:1;transform:none}}
+@keyframes spin   {to{transform:rotate(360deg)}}
+@keyframes sway   {0%,100%{rotate:-1.8deg}50%{rotate:1.8deg}}                                   /* cards rock along their arc */
+@keyframes bob    {0%,100%{translate:0 0}50%{translate:0 -9px}}                                 /* cards float up and down */
+@keyframes float  {0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-4px) rotate(4deg)}} /* icons */
+@keyframes drift  {0%,100%{translate:0 0}25%{translate:-3px 2px}50%{translate:4px -1px}75%{translate:-2px -3px}} /* headline layers */
+@keyframes nudge  {0%,100%{transform:rotate(0)}30%{transform:rotate(-14deg)}60%{transform:rotate(12deg)}}
+@keyframes pulse  {0%,100%{opacity:1}50%{opacity:.35}}
+
+/* ---------- page load ---------- */
+.top{animation:fadeIn .6s ease both}
+.slab{animation:slab 1s var(--ease) both}
+.titlebox + .meta{animation:fadeUp .8s .3s var(--ease) both}
+.controls,.skills-controls,.filters,.count{animation:fadeUp .7s .45s var(--ease) both}
+.label.empty{animation:pulse 1.4s ease-in-out infinite}            /* "Loading..." placeholder */
+
+/* headline: the outline and solid layers drift slightly out of step (a soft glitch) */
+.word .ghost{animation:drift 7s ease-in-out infinite}
+.word .solid{animation:drift 9s ease-in-out infinite reverse}
+
+/* ---------- scroll reveal (toggled by initReveal() in js/api.js) ---------- */
+.reveal{--d:0s;opacity:0;transform:translateY(18px);
+  transition:opacity .7s var(--ease) var(--d),transform .7s var(--ease) var(--d),
+             translate .3s var(--ease),scale .3s var(--ease),box-shadow .3s ease}
+.reveal.visible{opacity:1;transform:none}
+/* stagger: items in the same row/list arrive one after another */
+:is(.grid,.stack,.shots,.ach-list)>.reveal:nth-child(2){--d:.07s}
+:is(.grid,.stack,.shots,.ach-list)>.reveal:nth-child(3){--d:.14s}
+:is(.grid,.stack,.shots,.ach-list)>.reveal:nth-child(4){--d:.21s}
+:is(.grid,.stack,.shots,.ach-list)>.reveal:nth-child(n+5){--d:.28s}
+
+/* ---------- hover feedback (mouse / trackpad only) ---------- */
+.menu-btn{transition:rotate .5s var(--ease)}
+.pill{transition:background .25s,color .25s,border-color .25s,translate .25s var(--ease),scale .15s}
+.pill:active{scale:.97}
+.menu .close{transition:rotate .4s var(--ease)}
+@media (hover:hover){
+  .menu-btn:hover,.menu .close:hover{rotate:90deg}
+  .pill:hover{translate:0 -2px}
+  .card.reveal.visible:hover,.proj.reveal.visible:hover,.cert.reveal.visible:hover,.shot.reveal.visible:hover,.ach.reveal.visible:hover{
+    translate:0 -6px;scale:1.012;box-shadow:0 18px 38px rgba(0,0,0,.2)}
 }
 
-/* Continuous rotation (ring, logo glyph) */
-@keyframes spin{
-  to{transform:rotate(360deg)}
-}
+/* ---------- skill meters fill as their card scrolls into view ---------- */
+.skill .fill{width:0;transition:width 1.1s .15s var(--ease)}
+.skill.visible .fill{width:var(--p,0%)}
 
-/* Card sway (idle) */
-@keyframes sway{
-  0%,100%{rotate:-1.8deg}
-  50%    {rotate:1.8deg}
-}
+/* ---------- home page: card fan, idle motion, ring ---------- */
+.stage .fcard{transition:transform .8s var(--ease),opacity .4s,scale .3s var(--ease)}
+.stage.ready .fcard{                                                   /* sway + float, each card out of step */
+  animation:sway 6s ease-in-out infinite,bob 5.5s ease-in-out infinite;
+  animation-delay:calc(var(--o)*-.8s),calc(var(--o)*-.6s)}
+.stage.ready .glyph{animation:float 4s ease-in-out infinite}
+.stage.ready .glyph.logo{animation:spin 18s linear infinite}           /* spiral logo on the red card */
+@media (hover:hover){.fcard.on:hover{scale:1.05}}
+.ring svg{animation:spin 40s linear infinite}
+.menu-btn.nudge{animation:nudge 1.1s ease-in-out 2}                    /* wiggle while the "Menu" pop-up shows */
 
-/* Icon float (idle) */
-@keyframes float{
-  0%,100%{transform:translateY(0) rotate(-4deg)}
-  50%    {transform:translateY(-4px) rotate(4deg)}
-}
+/* ---------- full-screen menu: links slide in one by one ---------- */
+.menu{transition:clip-path .7s cubic-bezier(.7,0,.2,1)}
+.menu a{opacity:0;translate:0 26px;transition:opacity .5s var(--ease),translate .6s var(--ease)}
+.menu.open a{opacity:1;translate:0 0}
+.menu.open a:nth-of-type(1){transition-delay:.25s}
+.menu.open a:nth-of-type(2){transition-delay:.31s}
+.menu.open a:nth-of-type(3){transition-delay:.37s}
+.menu.open a:nth-of-type(4){transition-delay:.43s}
+.menu.open a:nth-of-type(5){transition-delay:.49s}
+.menu.open a:nth-of-type(6){transition-delay:.55s}
+.menu.open a:nth-of-type(7){transition-delay:.61s}
 
-/* Menu button nudge — triggered by home.js */
-@keyframes nudge{
-  0%,100%{transform:rotate(0)}
-  30%    {transform:rotate(-14deg)}
-  60%    {transform:rotate(12deg)}
-}
+/* ---------- forms: fields glow softly on focus; status messages slide in ---------- */
+:is(input,textarea,select){transition:border-color .25s,box-shadow .25s,background-color .25s}
+:is(input,textarea,select):focus-visible{border-color:var(--red);box-shadow:0 0 0 3px rgba(236,74,47,.28);outline:none}
+.notice,.notice.ok,.form-ok{animation:fadeUp .4s var(--ease) both}
 
-/* Footer heart pulse */
-@keyframes heartPulse{
-  0%,100%{transform:scale(1);filter:drop-shadow(0 0 0 rgba(236,74,47,0))}
-  50%    {transform:scale(1.32);filter:drop-shadow(0 0 9px rgba(236,74,47,.85))}
-}
+/* ---------- image viewers (lightbox dialogs) ---------- */
+dialog[open]{animation:fadeIn .25s ease}
+dialog[open]::backdrop{animation:fadeIn .3s ease}
+dialog[open] .lb,dialog[open]>img{animation:zoomIn .35s var(--spring) both}
 
-/* CV panel fade (used on other pages) */
-@keyframes cvFadeIn{
-  from{opacity:0;transform:translateY(10px)}
-  to  {opacity:1;transform:translateY(0)}
-}
-
-/* project-details hero bar */
-@keyframes grow{
-  from{transform:scaleY(0);transform-origin:top}
-  to  {transform:scaleY(1)}
-}
-
-/* Reduced motion — kill everything */
+/* ---------- reduced motion: show everything, move nothing ---------- */
 @media (prefers-reduced-motion:reduce){
-  *, *::before, *::after{
-    animation-duration:0.01ms !important;
-    animation-iteration-count:1 !important;
-    transition-duration:0.01ms !important;
-  }
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
+  .skill .fill{width:var(--p,0%)}
+  .menu a{opacity:1;translate:none}
 }
