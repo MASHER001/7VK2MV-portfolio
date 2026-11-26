@@ -35,7 +35,10 @@
           <section class="pane list-pane" aria-label="Messages">
             <div class="pane-head">
               <h1>Messages</h1>
-              <span class="round red" id="unread" title="Unread messages">0</span>
+              <div class="pane-head-actions">
+                <a class="btn secondary sm" href="../contact.html" target="_blank" rel="noopener noreferrer">View page preview</a>
+                <span class="round red" id="unread" title="Unread messages">0</span>
+              </div>
             </div>
             <input id="search" type="search" placeholder="Search messages" aria-label="Search messages">
             <div id="list"><p class="muted list-loading">Loading messages…</p></div>

@@ -177,6 +177,12 @@ a:hover{text-decoration:underline}
   align-items:center;
   gap:.75rem;
 }
+.head .head-actions{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:.65rem;
+}
 
 /* =====================================================================
    BUTTONS
@@ -781,6 +787,12 @@ body:has(dialog[open]){overflow:hidden}
     align-items:stretch;
     width:100%;
   }
+  .head .head-actions{
+    width:100%;
+    flex-direction:column;
+    align-items:stretch;
+  }
+  .head .head-actions .btn{justify-content:center}
   .head .save-group #status{text-align:center}
   .toolbar .btn{margin-left:0;width:100%}
   .table-wrap{font-size:.85rem}

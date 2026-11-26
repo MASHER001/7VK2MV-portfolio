@@ -76,8 +76,8 @@
     return (w[0][0] + (w.length > 1 ? w[w.length - 1][0] : "")).toUpperCase();
   };
 
-  const section = (title, ...kids) =>
-    window.el("section", { class: "card reveal" }, window.el("h2", { text: title }), ...kids);
+  const section = (title, className, ...kids) =>
+    window.el("section", { class: "card reveal about-card " + className }, window.el("h2", { text: title }), ...kids);
 
   const fact = (label, value) =>
     value
@@ -147,7 +147,7 @@
         window.el("div", {}, photo),
         window.el("div", { class: "stack" },
           /* Hello card — name, role, bio */
-          window.el("section", { class: "card reveal" },
+          window.el("section", { class: "card reveal about-card about-intro" },
             window.el("h2", { text: "Hello" }),
             window.el("p", { class: "name", text: p.full_name || "" }),
             window.el("p", { class: "role", text: p.professional_title || "" }),
@@ -157,6 +157,7 @@
           /* Availability card */
           (p.availability_status || p.availability_message) && section(
             "Availability",
+            "about-availability",
             p.availability_status  && window.el("span", { class: "badge", text: p.availability_status }),
             p.availability_message && window.el("p", { class: "avail-msg", text: p.availability_message })
           ),
@@ -164,6 +165,7 @@
           /* Details card — location and email */
           (p.location || p.email) && section(
             "Details",
+            "about-details",
             window.el("div", { class: "facts" },
               fact("Location", p.location),
               fact("Email",    p.email)
@@ -173,6 +175,7 @@
           /* Find me card — CV + all socials */
           (links.length || cv) && section(
             "Find me",
+            "about-links",
             window.el("div", { class: "links" },
               cv && window.el("a", {
                 class: "pill solid",
@@ -218,7 +221,7 @@
       if (!skills.length) return;
 
       slot.replaceWith(
-        window.el("section", { class: "card reveal" },
+        window.el("section", { class: "card reveal about-card about-skills" },
           window.el("h2", { text: "Skills" }),
           window.el("div", { class: "chips" },
             skills.map(s =>

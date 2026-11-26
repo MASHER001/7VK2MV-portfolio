@@ -38,6 +38,12 @@
   justify-content: space-between;
 }
 
+.pane-head-actions {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+}
+
 .pane-head h1 {
   margin: 0;
   font-size: 1.2rem;
@@ -366,6 +372,15 @@
 }
 
 @media (max-width: 460px) {
+  .pane-head {
+    flex-wrap: wrap;
+  }
+
+  .pane-head-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
   .actions {
     align-items: stretch;
     flex-direction: column;
